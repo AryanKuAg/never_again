@@ -1,10 +1,60 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:never_again/provider/reportCardLogic.dart';
+import 'package:provider/provider.dart';
 
 enum GlobalValues { public, private }
 enum ReasonOfMasturbation { porn, eroticMovies, mood, fuck }
 enum AmountOfSperm { FewDrops, ATeaspoon, FewTeaspoon }
+
+int amountOfSpermGetter(AmountOfSperm myAmountOfSperm) {
+  switch (myAmountOfSperm) {
+    case AmountOfSperm.FewDrops:
+      {
+        return 2;
+      }
+      break;
+
+    case AmountOfSperm.ATeaspoon:
+      {
+        return 6;
+      }
+      break;
+    case AmountOfSperm.FewTeaspoon:
+      {
+        return 18;
+      }
+      break;
+
+    default:
+      {
+        return null;
+      }
+      break;
+  }
+}
+
+String myRadioValueGetter(GlobalValues myGlobalValue) {
+  switch (myGlobalValue) {
+    case GlobalValues.public:
+      {
+        return 'Public';
+      }
+      break;
+    case GlobalValues.private:
+      {
+        return 'Private';
+      }
+      break;
+
+    default:
+      {
+        return null;
+      }
+      break;
+  }
+}
 
 class SubmitMasturbationData extends StatefulWidget {
   @override
@@ -21,7 +71,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
   Widget build(BuildContext context) {
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final mediaQuery = MediaQuery.of(context).size;
-
+    final reportCardLogic = Provider.of<ReportCardLogic>(context);
     return Scaffold(
       appBar: NeumorphicAppBar(),
       body: Container(
@@ -356,7 +406,22 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                   'Submit Data',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 )),
-                onPressed: () {},
+                onPressed: () {
+                  if (myRadioValue != null) {
+                    reportCardLogic.addReportCard(
+                        reason: dropdownValue,
+                        customSelection: mySliderValue.toInt(),
+                        selectAmount: amountOfSpermGetter(amountOfSperm),
+                        pubOrPri: myRadioValueGetter(myRadioValue));
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (ctx) => AlertDialog(
+                              title: Text('Something Missing'),
+                              content: Text('Check all the field again!!!'),
+                            ));
+                  }
+                },
               ),
             ),
           ],
