@@ -17,47 +17,6 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
   double mySliderValue = 10.0;
   AmountOfSperm amountOfSperm = AmountOfSperm.FewTeaspoon;
 
-  Widget RadioSelectTheAmount(
-      {AmountOfSperm groupValue,
-      dynamic myValue,
-      String myImageAdd,
-      String myText,
-      Size mediaQuery}) {
-    return NeumorphicRadio(
-      groupValue: groupValue,
-      value: myValue,
-      onChanged: (val) {
-        print(val);
-        setState(() {
-          groupValue = val;
-        });
-      },
-      child: Container(
-        width: mediaQuery.width * 0.25,
-        padding: EdgeInsets.all(5),
-        margin: EdgeInsets.all(5),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset(
-              myImageAdd,
-              height: 60,
-              width: 60,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Text(
-                myText,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
@@ -199,30 +158,46 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                           child: Text('---OR---',
                               style: TextStyle(fontWeight: FontWeight.bold)),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(0.0),
-                          child: NeumorphicSlider(
-                            min: 1,
-                            max: 100,
-                            style: SliderStyle(accent: Colors.pinkAccent),
-                            value: mySliderValue,
-                            thumb: Chip(
-                              label: Text(
-                                '${mySliderValue.ceil().toString()}ml',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                        if (amountOfSperm != null)
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: NeumorphicButton(
+                              child: Text(
+                                'Custom Select',
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              backgroundColor:
-                                  Colors.pinkAccent.withOpacity(0.8),
+                              onPressed: () {
+                                setState(() {
+                                  amountOfSperm = null;
+                                });
+                              },
                             ),
-                            onChanged: (val) {
-                              setState(() {
-                                mySliderValue = val;
-                              });
-                            },
                           ),
-                        )
+                        if (amountOfSperm == null)
+                          Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: NeumorphicSlider(
+                              min: 1,
+                              max: 100,
+                              style: SliderStyle(accent: Colors.pinkAccent),
+                              value: mySliderValue,
+                              thumb: Chip(
+                                label: Text(
+                                  '${mySliderValue.ceil().toString()}ml',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                                backgroundColor:
+                                    Colors.pinkAccent.withOpacity(0.8),
+                              ),
+                              onChanged: (val) {
+                                setState(() {
+                                  mySliderValue = val;
+                                });
+                              },
+                            ),
+                          )
                       ],
                     ),
                   ),
@@ -303,8 +278,25 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                     margin: EdgeInsets.all(10),
                     child: NeumorphicRadio(
                       child: Padding(
-                        padding: const EdgeInsets.all(50.0),
-                        child: Text('PRIVATE'),
+                        padding: EdgeInsets.all(mediaQuery.height * 0.05),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            NeumorphicIcon(
+                              Icons.lock,
+                              style: NeumorphicStyle(
+                                  depth: 1, surfaceIntensity: 1, intensity: 1),
+                              size: mediaQuery.height * 0.03,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'PRIVATE',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
                       groupValue: myRadioValue,
                       value: GlobalValues.private,
@@ -322,8 +314,25 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                     margin: EdgeInsets.all(10),
                     child: NeumorphicRadio(
                       child: Padding(
-                        padding: const EdgeInsets.all(50.0),
-                        child: Text('PUBLIC'),
+                        padding: EdgeInsets.all(mediaQuery.height * 0.05),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            NeumorphicIcon(
+                              Icons.public,
+                              style: NeumorphicStyle(
+                                  depth: 1, surfaceIntensity: 1, intensity: 1),
+                              size: mediaQuery.height * 0.03,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              'PUBLIC',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
                       groupValue: myRadioValue,
                       value: GlobalValues.public,
