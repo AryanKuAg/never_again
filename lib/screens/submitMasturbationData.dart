@@ -163,7 +163,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                             padding: const EdgeInsets.all(8.0),
                             child: NeumorphicButton(
                               child: Text(
-                                'Custom Select',
+                                'Custom Selection',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               onPressed: () {
