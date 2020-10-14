@@ -4,6 +4,7 @@ import 'package:never_again/widgets/chartOfMasturbation.dart';
 import 'package:never_again/widgets/myDrawer.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
 import 'package:never_again/widgets/pieChartOfReason.dart';
+import 'package:never_again/widgets/reportCardWidget.dart';
 
 class StatisticsScreen extends StatefulWidget {
   @override
@@ -19,7 +20,11 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [ChartOfMasturbation(), PieChartOfReason()],
+          children: [
+            ChartOfMasturbation(),
+            PieChartOfReason(),
+            ReportCardWidget()
+          ],
         ),
       ),
     );

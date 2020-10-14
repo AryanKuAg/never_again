@@ -35,27 +35,6 @@ int amountOfSpermGetter(AmountOfSperm myAmountOfSperm) {
   }
 }
 
-String myRadioValueGetter(GlobalValues myGlobalValue) {
-  switch (myGlobalValue) {
-    case GlobalValues.public:
-      {
-        return 'Public';
-      }
-      break;
-    case GlobalValues.private:
-      {
-        return 'Private';
-      }
-      break;
-
-    default:
-      {
-        return null;
-      }
-      break;
-  }
-}
-
 class SubmitMasturbationData extends StatefulWidget {
   @override
   _SubmitMasturbationDataState createState() => _SubmitMasturbationDataState();
@@ -412,7 +391,11 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                         reason: dropdownValue,
                         customSelection: mySliderValue.toInt(),
                         selectAmount: amountOfSpermGetter(amountOfSperm),
-                        pubOrPri: myRadioValueGetter(myRadioValue));
+                        public:
+                            myRadioValue == GlobalValues.public ? true : false,
+                        id: DateTime.now().toString(),
+                        dateTime: DateTime.now());
+                    Navigator.of(context).pop();
                   } else {
                     showDialog(
                         context: context,

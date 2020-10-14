@@ -29,7 +29,7 @@ class _ChatScreenState extends State<ChatScreen> {
               width: double.infinity,
               child: Neumorphic(
                 child: Text('hey'),
-              ))
+              )),
         ],
       ),
     );
