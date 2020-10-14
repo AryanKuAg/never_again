@@ -35,84 +35,137 @@ class ReportCardWidget extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           child: Container(
                             padding: EdgeInsets.all(8),
-                            child: Row(
-                              children: [
-                                Image.asset(
-                                  'asset/moresperm.png',
-                                  width: mediaQuery.height * 0.04,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  '${e.sperms.toString()} ml',
-                                  style: TextStyle(
-                                      fontSize: mediaQuery.height * 0.04,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  '=',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: mediaQuery.height * 0.04),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Image.asset(
-                                          'asset/ssd.png',
-                                          width: mediaQuery.height * 0.04,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          '${(e.sperms * 18.6 as double).toInt().toString()} TB',
-                                          style: TextStyle(
-                                              fontSize:
-                                                  mediaQuery.height * 0.04,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Image.asset(
-                                          'asset/dollar.png',
-                                          width: mediaQuery.height * 0.04,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          '\$ ${(e.sperms * 1620.0 as double).toInt().toString()} ',
-                                          style: TextStyle(
-                                              fontSize:
-                                                  mediaQuery.height * 0.04,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
+                            child: Chip(
+                              label: Row(
+                                children: [
+                                  Image.asset(
+                                    'asset/moresperm.png',
+                                    width: mediaQuery.height * 0.04,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    '${e.sperms.toString()} ml',
+                                    style: TextStyle(
+                                        fontSize: mediaQuery.height * 0.04,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    '=',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: mediaQuery.height * 0.04),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Image.asset(
+                                            'asset/ssd.png',
+                                            width: mediaQuery.height * 0.04,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            '${(e.sperms * 18.6 as double).toInt().toString()} TB',
+                                            style: TextStyle(
+                                                fontSize:
+                                                    mediaQuery.height * 0.04,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Image.asset(
+                                            'asset/dollar.png',
+                                            width: mediaQuery.height * 0.04,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            '\$ ${(e.sperms * 1620.0 as double).toInt().toString()} ',
+                                            style: TextStyle(
+                                                fontSize:
+                                                    mediaQuery.height * 0.04,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                        ListTile(
-                          leading: Text('hey'),
-                          title: Text('hey'),
-                          trailing: Text('hey'),
+                        Chip(
+                          label: Text(
+                            'REASON: ${e.reason.toString()}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.all(8),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  child: NeumorphicButton(
+                                    child: Text(
+                                      'Like',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                  margin: EdgeInsets.all(5),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.all(5),
+                                  child: NeumorphicButton(
+                                    child: Text(
+                                      'Comment',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Container(
+                                  margin: EdgeInsets.all(5),
+                                  child: NeumorphicButton(
+                                    child: Text(
+                                      'Share',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         )
                       ],
                     ),

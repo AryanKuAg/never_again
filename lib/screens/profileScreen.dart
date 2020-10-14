@@ -1,20 +1,28 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:never_again/provider/reportCardLogic.dart';
 import 'package:never_again/widgets/iconNameFunction.dart';
 import 'package:never_again/widgets/myDrawer.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
+    final reportCardLogic = Provider.of<ReportCardLogic>(context);
     return Scaffold(
       drawer: MyDrawer(),
       appBar: CustomNeumorphicAppBar(
-        ctx: context,
-        titleText: 'Profile',
-      ),
+          titleText: 'Profile',
+          ctx: context,
+          myWidgetList: [
+            NeumorphicButton(
+              child: Icon(Icons.edit),
+              onPressed: () {},
+            ),
+          ]),
       body: Container(
         width: double.infinity,
         child: Column(
@@ -80,7 +88,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             Chip(
               label: NeumorphicText(
-                '50 Uploads',
+                '${reportCardLogic.reportCardList.length.toString()} Uploads',
                 textStyle: NeumorphicTextStyle(fontWeight: FontWeight.bold),
                 style: NeumorphicStyle(
                     depth: 1,
@@ -88,6 +96,10 @@ class ProfileScreen extends StatelessWidget {
                     surfaceIntensity: 1,
                     color: Colors.black.withOpacity(0.5)),
               ),
+            ),
+            Text(
+              'AlemantrixAryanAgrawal',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),

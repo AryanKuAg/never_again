@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:never_again/screens/chatStoreScreen.dart';
 import 'package:never_again/widgets/myDrawer.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
 
@@ -19,7 +20,10 @@ class _ChatScreenState extends State<ChatScreen> {
           myWidgetList: [
             NeumorphicButton(
               child: Icon(Icons.add_shopping_cart_rounded),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (ctx) => ChatStoreScreen()));
+              },
             )
           ]),
       body: Column(
