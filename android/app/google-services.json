@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1085268785755",
+    "firebase_url": "https://never-again-80483.firebaseio.com",
+    "project_id": "never-again-80483",
+    "storage_bucket": "never-again-80483.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1085268785755:android:7f4125728864099aca9d7e",
+        "android_client_info": {
+          "package_name": "xyz.funfury.never_again"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1085268785755-r8dp7hotbe9gg5gbtlrrqohh75ah4i1p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoZVXkvkaRCA623FYW3oCowayTMjbZk8g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1085268785755-r8dp7hotbe9gg5gbtlrrqohh75ah4i1p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

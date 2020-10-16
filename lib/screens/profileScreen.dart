@@ -21,6 +21,9 @@ class ProfileScreen extends StatelessWidget {
             NeumorphicButton(
               child: Icon(Icons.edit),
               onPressed: () {},
+            ),NeumorphicButton(
+              child: Icon(Icons.settings),
+              onPressed: () {},
             ),
           ]),
       body: Container(
