@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:never_again/provider/loginLogic.dart';
 import 'package:never_again/tabbar.dart';
 
 enum Gender {
@@ -16,12 +18,14 @@ class LoginInfoScreen extends StatefulWidget {
 class _LoginInfoScreenState extends State<LoginInfoScreen> {
   double userAge = 20.0;
   Gender selectedGender;
+  final textEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final viewInsets = MediaQuery.of(context).viewInsets;
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -54,6 +58,7 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
               Neumorphic(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                   child: TextField(
+                    controller: textEditingController,
                     decoration: InputDecoration(
                         hintText: 'Username', border: InputBorder.none),
                   )),
@@ -177,19 +182,32 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
                     ],
                   ),
                 ),
-              NeumorphicButton(
-                child: Text(
-                  'SIGN UP NOW',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: textScaleFactor * 18),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (ctx) => MyTabBar()));
-                },
-              )
+              if (viewInsets.bottom == 0)
+                NeumorphicButton(
+                  child: Text(
+                    'SIGN UP NOW',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: textScaleFactor * 18),
+                  ),
+                  onPressed: () {
+                    if (textEditingController.text.length > 2 &&
+                        selectedGender != null) {
+                      LoginLogic.loginAnonymously(
+                          username: textEditingController.text,
+                          age: userAge.round(),
+                          isMale: selectedGender == Gender.male ? true : false);
+                    } else {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                                title: Text('Something Is Missing'),
+                                content: Text('Try to Re-check all the fields'),
+                              ));
+                    }
+                  },
+                )
             ],
           ),
         ),
