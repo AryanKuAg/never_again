@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:intl/intl.dart';
 import 'package:never_again/provider/myUser.dart';
 
 class ReportCardWidget extends StatelessWidget {
@@ -41,8 +42,10 @@ class ReportCardWidget extends StatelessWidget {
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               trailing: Chip(
-                                label: Text(
-                                    e['dateTime'].toString().substring(0, 10)),
+                                label: Text(DateFormat.yMMMMd('en_US')
+                                    .format(
+                                        (e['dateTime'] as Timestamp).toDate())
+                                    .toString()),
                               ),
                             ),
                             SingleChildScrollView(

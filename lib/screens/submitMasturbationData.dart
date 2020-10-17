@@ -46,6 +46,12 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
   String dropdownValue = 'No Reason';
   double mySliderValue = 10.0;
   AmountOfSperm amountOfSperm = AmountOfSperm.FewTeaspoon;
+  Future<String> myFuture;
+  @override
+  void initState() {
+    super.initState();
+    myFuture = MyUser().getUsername;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +64,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
       body: Container(
         width: double.infinity,
         child: FutureBuilder(
-          future: MyUser().getUsername,
+          future: myFuture,
           builder: (ctx, futureSnapshot) {
             if (futureSnapshot.connectionState == ConnectionState.done) {
               return Column(

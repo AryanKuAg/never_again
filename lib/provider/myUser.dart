@@ -10,9 +10,16 @@ class MyUser with ChangeNotifier {
     return _auth.currentUser.uid.toString();
   }
 
-  Future<void> get getUsername async {
+  Future<String> get getUsername async {
     final userInfoDoc =
         await _fireStore.collection('users').doc(_auth.currentUser.uid).get();
     return userInfoDoc['username'];
+  }
+
+  Future<int> get getTotalUploads async {
+    final doc = await _fireStore
+        .collection('users/${_auth.currentUser.uid}/reportCard')
+        .get();
+    return doc.size;
   }
 }
