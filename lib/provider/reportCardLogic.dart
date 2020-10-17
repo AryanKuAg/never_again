@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:never_again/models/reportCardModel.dart';
 
 class ReportCardLogic with ChangeNotifier {
+  final _auth = FirebaseAuth.instance;
+  final _fireStore = FirebaseFirestore.instance;
   List _listOfReportCards = <ReportCardModel>[];
 
   List get reportCardList {
@@ -14,21 +18,16 @@ class ReportCardLogic with ChangeNotifier {
       int selectAmount,
       bool public,
       DateTime dateTime,
-      String id}) {
-    //lol
-    // print(reason);
-    // print(customSelection);
-    // print(selectAmount);
-    // print(pubOrPri);
+      String id,
+      String username}) {
     try {
-      _listOfReportCards.add(ReportCardModel(
-          username: 'Aryan',
-          userImage: Image.asset('asset/aryan.jpg'),
-          sperms: selectAmount != null ? selectAmount : customSelection,
-          reason: reason,
-          public: public,
-          datetime: dateTime,
-          id: id));
+      _fireStore.collection('users/${_auth.currentUser.uid}/reportCard').add({
+        'dateTime': dateTime,
+        'sperms': selectAmount != null ? selectAmount : customSelection,
+        'reason': reason,
+        'public': public,
+        'username': username
+      });
     } catch (e) {
       print(e);
     }
