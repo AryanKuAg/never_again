@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:never_again/provider/loginLogic.dart';
 import 'package:never_again/provider/myUser.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
 
@@ -29,6 +30,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final navigator = Navigator.of(context);
     return Scaffold(
       appBar: CustomNeumorphicAppBar(
           ctx: context,
@@ -36,7 +38,14 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
           myWidgetList: [
             NeumorphicButton(
               child: Icon(Icons.check),
-              onPressed: () {},
+              onPressed: () {
+                if (nameTextController.text.length > 2 &&
+                    bioTextController.text.length > 2)
+                  MyUser().updateUserInfo(
+                      username: nameTextController.text.trim(),
+                      bio: bioTextController.text.trim());
+                navigator.pop();
+              },
             ),
           ]),
       body: Padding(
@@ -68,6 +77,39 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                 ),
               ),
             ),
+            Spacer(),
+            NeumorphicButton(
+              child: Text(
+                'Log out',
+                textAlign: TextAlign.center,
+              ),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                          content:
+                              Text('Are You Sure? We Don\'t Want To Lose U 😥'),
+                          actions: [
+                            FlatButton(
+                              child: Text('Leave'),
+                              onPressed: () {
+                                LoginLogic().auth.signOut();
+                                if (navigator.canPop()) navigator.pop();
+                              },
+                            ),
+                            FlatButton(
+                              child: Text('Stay'),
+                              onPressed: () {
+                                navigator.pop();
+                              },
+                            )
+                          ],
+                        ));
+              },
+            ),
+            SizedBox(
+              height: 20,
+            )
           ],
         ),
       ),

@@ -28,4 +28,15 @@ class MyUser with ChangeNotifier {
         .get();
     return doc.size;
   }
+
+  Future<void> updateUserInfo({String username, bio}) async {
+    try {
+      await _fireStore
+          .collection('users')
+          .doc(_auth.currentUser.uid)
+          .update({'username': username, 'bio': bio});
+    } catch (e) {
+      print(e);
+    }
+  }
 }
