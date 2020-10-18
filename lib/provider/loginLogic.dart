@@ -11,6 +11,11 @@ class LoginLogic {
         .fireStore
         .collection('users')
         .doc(userSignIn.user.uid)
-        .set({'username': username, 'age': age, 'isMale': isMale});
+        .set({
+      'username': username,
+      'age': age,
+      'isMale': isMale,
+      'bio': 'My Bio'
+    });
   }
 }

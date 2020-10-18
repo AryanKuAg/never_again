@@ -8,6 +8,7 @@ import 'package:never_again/provider/loginLogic.dart';
 import 'package:never_again/provider/myUser.dart';
 
 import 'package:never_again/provider/reportCardLogic.dart';
+import 'package:never_again/screens/editUserProfileScreen.dart';
 import 'package:never_again/widgets/iconNameFunction.dart';
 import 'package:never_again/widgets/myDrawer.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
@@ -28,11 +29,10 @@ class ProfileScreen extends StatelessWidget {
           myWidgetList: [
             NeumorphicButton(
               child: Icon(Icons.edit),
-              onPressed: () {},
-            ),
-            NeumorphicButton(
-              child: Icon(Icons.settings),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => EditUserProfileScreen()));
+              },
             ),
           ]),
       body: FutureBuilder(
@@ -125,8 +125,8 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child: Text(
-                              'Hey there i am a superhero who try to build an app for the future and with a hope that it will rock soon'),
+                          child: Text(snapshot.data.data()['bio'].toString() ??
+                              'My Bio'),
                         )
                       ],
                     ),
