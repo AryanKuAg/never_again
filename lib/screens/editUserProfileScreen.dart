@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:never_again/provider/loginLogic.dart';
 import 'package:never_again/provider/myUser.dart';
+import 'package:never_again/screens/loginScreen/signupScreen.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
 
 class EditUserProfileScreen extends StatefulWidget {
@@ -93,8 +96,13 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                             FlatButton(
                               child: Text('Leave'),
                               onPressed: () {
-                                LoginLogic().auth.signOut();
-                                if (navigator.canPop()) navigator.pop();
+                                navigator.pop();
+                                navigator.pop();
+                                Timer(Duration(seconds: 1), () {
+                                  LoginLogic().auth.signOut();
+                                  navigator.pushReplacement(MaterialPageRoute(
+                                      builder: (ctx) => SignUpScreen()));
+                                });
                               },
                             ),
                             FlatButton(
