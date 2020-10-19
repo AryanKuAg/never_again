@@ -7,12 +7,10 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import 'package:never_again/provider/myUser.dart';
 
-
 import 'package:never_again/screens/editUserProfileScreen.dart';
 import 'package:never_again/widgets/iconNameFunction.dart';
 import 'package:never_again/widgets/myDrawer.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
-
 
 class ProfileScreen extends StatelessWidget {
   final _firestore = FirebaseFirestore.instance;

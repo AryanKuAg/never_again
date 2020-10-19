@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:never_again/provider/loginLogic.dart';
 
 enum Gender {
@@ -14,6 +17,7 @@ class LoginInfoScreen extends StatefulWidget {
 }
 
 class _LoginInfoScreenState extends State<LoginInfoScreen> {
+  File _pickedImage;
   var _isLoading = false;
   double userAge = 20.0;
   Gender selectedGender;
@@ -23,6 +27,24 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
   void dispose() {
     textEditingController.dispose();
     super.dispose();
+  }
+
+  void _pickImageCamera() async {
+    final pickedImageFile = await ImagePicker()
+        .getImage(source: ImageSource.camera, imageQuality: 20);
+    setState(() {
+      _pickedImage = File(pickedImageFile.path);
+    });
+    if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+  }
+
+  void _pickImageGallery() async {
+    final pickedImageFile = await ImagePicker()
+        .getImage(source: ImageSource.gallery, imageQuality: 20);
+    setState(() {
+      _pickedImage = File(pickedImageFile.path);
+    });
+    if (Navigator.of(context).canPop()) Navigator.of(context).pop();
   }
 
   @override
@@ -46,8 +68,31 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
                         backgroundColor: Colors.white70,
                         radius: mediaQuery.height * 0.08,
                         child: Icon(Icons.camera_alt),
+                        backgroundImage: _pickedImage != null
+                            ? FileImage(_pickedImage)
+                            : null,
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                                  actions: [
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.camera_alt_rounded,
+                                      ),
+                                      onPressed: _pickImageCamera,
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.folder,
+                                      ),
+                                      onPressed: _pickImageGallery,
+                                    )
+                                  ],
+                                  content: Text('Choose The Source'),
+                                ));
+                      },
                     ),
                     SizedBox(
                       height: 10,
@@ -208,7 +253,8 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
                         ),
                         onPressed: () {
                           if (textEditingController.text.length > 2 &&
-                              selectedGender != null) {
+                              selectedGender != null &&
+                              _pickedImage != null) {
                             setState(() {
                               _isLoading = true;
                             });
@@ -218,7 +264,8 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
                                 isMale: selectedGender == Gender.male
                                     ? true
                                     : false,
-                                ctx: context);
+                                ctx: context,
+                                myImageFile: _pickedImage);
                           } else {
                             showDialog(
                                 context: context,
