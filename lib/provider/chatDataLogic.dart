@@ -24,8 +24,9 @@ class ChatDataLogic with ChangeNotifier {
       final somewaste = await _fireStore
           .collection('users/${e.id.trim().toString()}/reportCard')
           .orderBy('dateTime')
+          .where('public', isEqualTo: true)
           .get();
-
+      print(somewaste.toString());
       //if list exists...
       if (somewaste.docs.length >= 1) {
         // print(somewaste.docs.forEach((element) {}));

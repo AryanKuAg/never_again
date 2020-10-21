@@ -6,7 +6,7 @@ import 'package:never_again/provider/chatDataLogic.dart';
 import 'package:never_again/screens/chatStoreScreen.dart';
 import 'package:never_again/widgets/myDrawer.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
-
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -18,6 +18,10 @@ class _ChatScreenState extends State<ChatScreen> {
   void didChangeDependencies() {
     ChatDataLogic().getAllReportCard(ctx: context);
     super.didChangeDependencies();
+  }
+
+  Future<void> refreshCards(BuildContext context) async {
+    await Provider.of<ChatDataLogic>(context).getAllReportCard(ctx: context);
   }
 
   @override
@@ -45,6 +49,7 @@ class _ChatScreenState extends State<ChatScreen> {
               return Center(child: CircularProgressIndicator());
             }
             return SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: snapshot.data != null
                   ? Column(
                       children: [
@@ -62,6 +67,13 @@ class _ChatScreenState extends State<ChatScreen> {
                                           ),
                                           title: Text(
                                             e.username,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          subtitle: Text(
+                                            e.public
+                                                ? '🌍 PUBLIC'
+                                                : '🔒 PRIVATE',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold),
                                           ),

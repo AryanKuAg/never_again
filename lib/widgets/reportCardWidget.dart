@@ -11,8 +11,10 @@ class ReportCardWidget extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context).size;
 
     return StreamBuilder(
-      stream:
-          _fireStore.collection('users/${MyUser().uid}/reportCard').snapshots(),
+      stream: _fireStore
+          .collection('users/${MyUser().uid}/reportCard')
+          .orderBy('dateTime', descending: true)
+          .snapshots(),
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
@@ -21,11 +23,6 @@ class ReportCardWidget extends StatelessWidget {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // RaisedButton(
-            //     child: Text('Dabao na!!!'),
-            //     onPressed: () {
-            //       print(snapshot.data.documents[0]['sperms']);
-            //     })
             ...snapshot.data.documents
                 .map((e) => Container(
                       margin: EdgeInsets.all(8),
@@ -39,6 +36,10 @@ class ReportCardWidget extends StatelessWidget {
                               ),
                               title: Text(
                                 e['username'].toString(),
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              subtitle: Text(
+                                e['public'] ? '🌍 PUBLIC' : '🔒 PRIVATE',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               trailing: Chip(

@@ -18,6 +18,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       drawer: MyDrawer(),
       appBar: CustomNeumorphicAppBar(titleText: 'Statistics', ctx: context),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
