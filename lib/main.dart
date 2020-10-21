@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:never_again/provider/chatDataLogic.dart';
 import 'package:never_again/provider/loginLogic.dart';
 import 'package:never_again/provider/myUser.dart';
 import 'package:never_again/provider/reportCardLogic.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => LoginLogic(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => ChatDataLogic(),
         ),
       ],
       child: NeumorphicApp(

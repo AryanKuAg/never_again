@@ -52,14 +52,15 @@ class ProfileScreen extends StatelessWidget {
                                 glowColor: Colors.purple,
                                 endRadius: 100,
                                 child: CircleAvatar(
-                                  child: Neumorphic(
-                                    style: NeumorphicStyle(
-                                        shape: NeumorphicShape.convex,
-                                        intensity: 2,
-                                        border: NeumorphicBorder(width: 2),
-                                        boxShape: NeumorphicBoxShape.circle()),
-                                    child: Image.asset('asset/aryan.jpg'),
-                                  ),
+                                  backgroundImage:
+                                      snapshot.data.data()['userImageUrl'] !=
+                                              null
+                                          ? NetworkImage(
+                                              snapshot.data
+                                                  .data()['userImageUrl']
+                                                  .toString(),
+                                            )
+                                          : AssetImage('asset/boy.png'),
                                   radius: mediaQuery.height * 0.08,
                                 ),
                               ),

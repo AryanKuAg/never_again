@@ -15,7 +15,7 @@ class ReportCardModel {
       {@required this.username,
       @required this.id,
       @required this.datetime,
-      @required this.userImage,
+      this.userImage,
       @required this.sperms,
       @required this.reason,
       @required this.public,

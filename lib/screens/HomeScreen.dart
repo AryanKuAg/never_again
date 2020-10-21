@@ -26,10 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Icon(Icons.ac_unit_outlined),
               onPressed: () {},
             ),
-            NeumorphicButton(
-              child: Icon(Icons.ac_unit_outlined),
-              onPressed: () {},
-            ),
           ]),
       body: Container(
         width: double.infinity,
