@@ -11,7 +11,7 @@ class PieChartOfReason extends StatefulWidget {
 }
 
 class _PieChartOfReasonState extends State<PieChartOfReason> {
-  int touchedIndex;
+
   final fireStore = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
   @override
@@ -19,11 +19,44 @@ class _PieChartOfReasonState extends State<PieChartOfReason> {
     return FutureBuilder(
       future: fireStore
           .collection('users/${auth.currentUser.uid}/reportCard')
+          .limit(10)
           .get(),
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
+
+        final List _list = (snapshot.data as QuerySnapshot).docs.map((e) {
+          return e.data()['reason'];
+        }).toList();
+
+        const List<Color> colorCollection = [
+          Colors.black,
+          Colors.redAccent,
+          Colors.purpleAccent,
+          Colors.pinkAccent,
+          Colors.indigoAccent,
+          Colors.amber,
+          Colors.black,
+        ];
+
+        int j = 0;
+        final List<Map<String, dynamic>> _listWithFrequency =
+            _list.toSet().toList().map((e) {
+          int i = 0;
+
+          j++;
+          _list.forEach((element) {
+            if (element == e) i++;
+          });
+
+          if (i != 0)
+            return {'frequency': i, 'reason': e, 'color': colorCollection[j]};
+        }).toList();
+
+        _listWithFrequency
+            .sort((a, b) => b['frequency'].compareTo(a['frequency']));
+
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Neumorphic(
@@ -37,18 +70,19 @@ class _PieChartOfReasonState extends State<PieChartOfReason> {
                         ),
                         sectionsSpace: 0,
                         centerSpaceRadius: 40,
-                        sections: (snapshot.data as QuerySnapshot)
-                            .docs
+                        sections: _listWithFrequency
                             .map((e) => PieChartSectionData(
-                                  color: const Color(0xff0293ee),
-                                  value: 40,
+                                  color: e['color'],
+                                  value: (e['frequency'] as int).toDouble(),
                                   title: '40%',
+                                  showTitle: false,
                                   radius: 50,
                                   titleStyle: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: const Color(0xffffffff)),
                                 ))
+                            .take(5)
                             .toList()),
                   ),
                 ),
@@ -56,56 +90,28 @@ class _PieChartOfReasonState extends State<PieChartOfReason> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: (snapshot.data as QuerySnapshot)
-                        .docs
+                    children: _listWithFrequency
                         .map(
-                          (e) => Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 2,
-                            ),
-                            margin: EdgeInsets.symmetric(horizontal: 3),
-                            child: Indicator(
-                              color: Colors.pinkAccent,
-                              text: e.data()['reason'],
-                              isSquare: false,
-                            ),
-                          ),
+                          (e) {
+                            return Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 2,
+                              ),
+                              margin: EdgeInsets.symmetric(horizontal: 3),
+                              child: Indicator(
+                                color: e['color'],
+                                text: e['reason'],
+                                isSquare: false,
+                              ),
+                            );
+                          },
                         )
+                        .toSet()
+                        .where((element) =>
+                            (element.child as Indicator).text.length > 1)
+                        .take(5)
                         .toList()
-                    // <Widget>[
-                    //   Indicator(
-                    //     color: Colors.pinkAccent,
-                    //     text: 'First',
-                    //     isSquare: false,
-                    //   ),
-                    //   SizedBox(
-                    //     height: 4,
-                    //   ),
-                    //   Indicator(
-                    //     color: Color(0xfff8b250),
-                    //     text: 'Second',
-                    //     isSquare: false,
-                    //   ),
-                    //   SizedBox(
-                    //     height: 4,
-                    //   ),
-                    //   Indicator(
-                    //     color: Color(0xff845bef),
-                    //     text: 'Third',
-                    //     isSquare: false,
-                    //   ),
-                    //   SizedBox(
-                    //     height: 4,
-                    //   ),
-                    //   Indicator(
-                    //     color: Color(0xff13d38e),
-                    //     text: 'Fourth',
-                    //     isSquare: false,
-                    //   ),
-                    //   SizedBox(
-                    //     height: 18,
-                    //   ),
-                    // ],
+
                     ),
                 const SizedBox(
                   width: 28,
@@ -118,59 +124,4 @@ class _PieChartOfReasonState extends State<PieChartOfReason> {
     );
   }
 
-  List<PieChartSectionData> showingSections() {
-    return List.generate(4, (i) {
-      final isTouched = i == touchedIndex;
-      final double fontSize = isTouched ? 25 : 16;
-      final double radius = isTouched ? 60 : 50;
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: const Color(0xff0293ee),
-            value: 50,
-            title: '40%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 1:
-          return PieChartSectionData(
-            color: const Color(0xfff8b250),
-            value: 30,
-            title: '30%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 2:
-          return PieChartSectionData(
-            color: const Color(0xff845bef),
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 3:
-          return PieChartSectionData(
-            color: const Color(0xff13d38e),
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        default:
-          return null;
-      }
-    });
-  }
 }

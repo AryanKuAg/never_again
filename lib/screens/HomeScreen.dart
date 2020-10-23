@@ -35,7 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Text(DateFormat.yMMMMd().format(DateTime.now()),
                 style: TextStyle()),
-            Text('Did you did it today?'),
+            Text(
+              'Did you did it today?',
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: NeumorphicIcon(
