@@ -74,18 +74,18 @@ class ProfileScreen extends StatelessWidget {
                                       myFunction: () {
                                         print('just pressede');
                                       },
-                                      myIcon: Icons.ac_unit_outlined,
-                                      myName: 'Jodha',
+                                      myIcon: Image.asset('asset/bookmark.png'),
+                                      myName: 'Saved',
                                     ),
                                     IconNameFunction(
                                       myFunction: () {},
-                                      myIcon: Icons.ac_unit_outlined,
-                                      myName: 'Jodha',
+                                      myIcon: Image.asset('asset/medal.png'),
+                                      myName: 'Rewards',
                                     ),
                                     IconNameFunction(
                                       myFunction: () {},
-                                      myIcon: Icons.ac_unit_outlined,
-                                      myName: 'Jodha',
+                                      myIcon: Image.asset('asset/giftbox.png'),
+                                      myName: 'Gifts',
                                     ),
                                   ],
                                 ),
@@ -98,13 +98,13 @@ class ProfileScreen extends StatelessWidget {
                                   children: [
                                     IconNameFunction(
                                       myFunction: () {},
-                                      myIcon: Icons.ac_unit_outlined,
-                                      myName: 'Jodha',
+                                      myIcon: Image.asset('asset/love.png'),
+                                      myName: 'Loved',
                                     ),
                                     IconNameFunction(
                                       myFunction: () {},
-                                      myIcon: Icons.ac_unit_outlined,
-                                      myName: 'Jodha',
+                                      myIcon: Image.asset('asset/like.png'),
+                                      myName: 'Liked',
                                     ),
                                   ],
                                 ),
@@ -118,7 +118,7 @@ class ProfileScreen extends StatelessWidget {
                                       depth: 1,
                                       intensity: 1,
                                       surfaceIntensity: 1,
-                                      color: Colors.black.withOpacity(0.5)),
+                                      color: Colors.black),
                                 ),
                               ),
                               Text(

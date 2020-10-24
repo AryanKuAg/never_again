@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:never_again/provider/chatDataLogic.dart';
 import 'package:never_again/provider/loginLogic.dart';
 import 'package:never_again/provider/myUser.dart';
@@ -37,6 +38,8 @@ class MyApp extends StatelessWidget {
       child: NeumorphicApp(
           title: 'Never Again',
           debugShowCheckedModeBanner: false,
+          theme: NeumorphicThemeData(
+              textTheme: GoogleFonts.bubblegumSansTextTheme()),
           home: FirebaseAuth.instance.currentUser != null
               ? MyTabBar()
               : SignUpScreen()),

@@ -11,7 +11,6 @@ class PieChartOfReason extends StatefulWidget {
 }
 
 class _PieChartOfReasonState extends State<PieChartOfReason> {
-
   final fireStore = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
   @override
@@ -30,14 +29,14 @@ class _PieChartOfReasonState extends State<PieChartOfReason> {
           return e.data()['reason'];
         }).toList();
 
-        const List<Color> colorCollection = [
-          Colors.black,
-          Colors.redAccent,
-          Colors.purpleAccent,
-          Colors.pinkAccent,
-          Colors.indigoAccent,
-          Colors.amber,
-          Colors.black,
+        List<Color> colorCollection = [
+          Colors.black.withOpacity(0.8),
+          Colors.redAccent.withOpacity(0.8),
+          Colors.purpleAccent.withOpacity(0.8),
+          Colors.pinkAccent.withOpacity(0.8),
+          Colors.indigoAccent.withOpacity(0.8),
+          Colors.amber.withOpacity(0.8),
+          Colors.black.withOpacity(0.8),
         ];
 
         int j = 0;
@@ -110,9 +109,7 @@ class _PieChartOfReasonState extends State<PieChartOfReason> {
                         .where((element) =>
                             (element.child as Indicator).text.length > 1)
                         .take(5)
-                        .toList()
-
-                    ),
+                        .toList()),
                 const SizedBox(
                   width: 28,
                 ),
@@ -123,5 +120,4 @@ class _PieChartOfReasonState extends State<PieChartOfReason> {
       },
     );
   }
-
 }

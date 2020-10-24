@@ -1,29 +1,23 @@
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 class IconNameFunction extends StatelessWidget {
-  final IconData myIcon;
+  final Image myIcon;
   final String myName;
   final Function myFunction;
   IconNameFunction({this.myFunction, this.myIcon, this.myName});
   final NeumorphicStyle myNeumorphicStyle = NeumorphicStyle(
-      depth: 1,
-      intensity: 1,
-      surfaceIntensity: 1,
-      color: Colors.black.withOpacity(0.3));
+      depth: 1, intensity: 1, surfaceIntensity: 1, color: Colors.black);
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context).size;
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return FlatButton(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          NeumorphicIcon(
-            myIcon,
-            style: myNeumorphicStyle,
-            size: mediaQuery.height * 0.06,
+          myIcon,
+          SizedBox(
+            height: 2,
           ),
           NeumorphicText(
             myName,

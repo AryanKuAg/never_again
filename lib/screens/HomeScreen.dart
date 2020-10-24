@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:intl/intl.dart';
 
 import 'package:never_again/screens/noSelectionScreen.dart';
 import 'package:never_again/screens/submitMasturbationData.dart';
 import 'package:never_again/widgets/myDrawer.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
+import 'package:never_again/widgets/timerOfHomePage.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -16,6 +16,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+
     return Scaffold(
       drawer: MyDrawer(),
       appBar: CustomNeumorphicAppBar(
@@ -33,22 +35,24 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Text(DateFormat.yMMMMd().format(DateTime.now()),
-                style: TextStyle()),
+            TimerOfHomePage(myDateFormat: 'MMM dd, yyyy'),
             Text(
-              'Did you did it today?',
+              'Did You Masturbate Today?',
+              style: TextStyle(fontSize: textScaleFactor * 30),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: NeumorphicIcon(
-                Icons.threed_rotation,
-                style: NeumorphicStyle(
-                    depth: 2, surfaceIntensity: 1, intensity: 1),
-                size: 100,
-              ),
+            Container(
+                margin: EdgeInsets.all(20),
+                width: double.infinity,
+                height: 150,
+                child: Image.asset(
+                  'asset/tiger.png',
+                  fit: BoxFit.contain,
+                )),
+            Text(
+              'Time Left to Unlock Next Reward:',
+              style: TextStyle(fontSize: textScaleFactor * 25),
             ),
-            Text('Time Left to Unlock Next Award:'),
-            Text('gggggggggggggggggggg'),
+            TimerOfHomePage(myDateFormat: 'hh:mm:ss'),
             Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
