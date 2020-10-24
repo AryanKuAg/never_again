@@ -2,10 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:never_again/provider/myUser.dart';
 
 class ReportCardWidget extends StatelessWidget {
   final _fireStore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
@@ -17,7 +19,7 @@ class ReportCardWidget extends StatelessWidget {
           .snapshots(),
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Lottie.asset('asset/cat_loader.json', width: 100, height: 100);
         }
 
         return Column(
@@ -32,7 +34,9 @@ class ReportCardWidget extends StatelessWidget {
                           children: [
                             ListTile(
                               leading: CircleAvatar(
-                                child: Image.asset('asset/aryan.jpg'),
+                                backgroundImage: e['userImageUrl'] != null
+                                    ? NetworkImage(e['userImageUrl'].toString())
+                                    : null,
                               ),
                               title: Text(
                                 e['username'].toString(),

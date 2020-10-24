@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:never_again/provider/myUser.dart';
 
@@ -134,15 +135,19 @@ class ProfileScreen extends StatelessWidget {
                               )
                             ],
                           )
-                        : CircularProgressIndicator(),
+                        : Lottie.asset('asset/cat_loader.json',
+                            width: 100, height: 100),
                   );
                 }
-                return Center(child: CircularProgressIndicator());
+                return Center(
+                    child: Lottie.asset('asset/cat_loader.json',
+                        width: 100, height: 100));
               },
             );
           }
           return Center(
-            child: CircularProgressIndicator(),
+            child:
+                Lottie.asset('asset/cat_loader.json', width: 100, height: 100),
           );
         },
       ),

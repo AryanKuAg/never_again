@@ -3,6 +3,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import 'package:never_again/screens/noSelectionScreen.dart';
 import 'package:never_again/screens/submitMasturbationData.dart';
+import 'package:never_again/widgets/dateOfHomePage.dart';
 import 'package:never_again/widgets/myDrawer.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
 import 'package:never_again/widgets/timerOfHomePage.dart';
@@ -35,13 +36,14 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
-            TimerOfHomePage(myDateFormat: 'MMM dd, yyyy'),
+            DateOfHomePage(),
             Text(
               'Did You Masturbate Today?',
-              style: TextStyle(fontSize: textScaleFactor * 30),
+              style: TextStyle(
+                  fontSize: textScaleFactor * 30, fontWeight: FontWeight.bold),
             ),
             Container(
-                margin: EdgeInsets.all(20),
+                margin: EdgeInsets.all(22),
                 width: double.infinity,
                 height: 150,
                 child: Image.asset(
@@ -52,24 +54,28 @@ class _HomeScreenState extends State<HomeScreen> {
               'Time Left to Unlock Next Reward:',
               style: TextStyle(fontSize: textScaleFactor * 25),
             ),
-            TimerOfHomePage(myDateFormat: 'hh:mm:ss'),
-            Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SimpleCard(mediaQuery, 'YES', () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) => SubmitMasturbationData()));
-                }),
-                SimpleCard(mediaQuery, 'NO', () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (ctx) => NoSelectionScreen()));
-                })
-              ],
-            ),
             SizedBox(
-              height: 15,
-            )
+              height: 2,
+            ),
+            TimerOfHomePage(),
+            SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SimpleCard(mediaQuery, 'YES', () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => SubmitMasturbationData()));
+                  }),
+                  SimpleCard(mediaQuery, 'NO', () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (ctx) => NoSelectionScreen()));
+                  })
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -82,11 +88,12 @@ class _HomeScreenState extends State<HomeScreen> {
       height: mediaQuery.height * 0.2,
       child: NeumorphicButton(
         child: Center(
-            child: NeumorphicText(
+            child: Text(
           myText,
-          style: NeumorphicStyle(
-              depth: 2, intensity: 1, surfaceIntensity: 1, color: Colors.black),
-          textStyle: NeumorphicTextStyle(fontSize: mediaQuery.height * 0.05),
+          style: TextStyle(
+              fontSize: mediaQuery.height * 0.06,
+              fontWeight: FontWeight.bold,
+              color: Colors.black.withOpacity(0.75)),
         )),
         onPressed: execute,
       ),

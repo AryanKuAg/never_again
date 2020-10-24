@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:lottie/lottie.dart';
 
 class ChartOfMasturbation extends StatefulWidget {
   @override
@@ -25,7 +26,9 @@ class _ChartOfMasturbationState extends State<ChartOfMasturbation> {
             .get(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+                child: Lottie.asset('asset/cat_loader.json',
+                    width: 100, height: 100));
           }
 
           //list of sperm data

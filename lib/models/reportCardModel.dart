@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ReportCardModel {
   final String id;
   final String username;
-  final Image userImage;
+  final String userImage;
   final int sperms;
   final String reason;
   final bool public;

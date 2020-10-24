@@ -19,14 +19,16 @@ class ReportCardLogic with ChangeNotifier {
       bool public,
       DateTime dateTime,
       String id,
-      String username}) {
+      String username,
+      String userImageUrl}) {
     try {
       _fireStore.collection('users/${_auth.currentUser.uid}/reportCard').add({
         'dateTime': dateTime,
         'sperms': selectAmount != null ? selectAmount : customSelection,
         'reason': reason,
         'public': public,
-        'username': username
+        'username': username,
+        'userImageUrl': userImageUrl
       });
     } catch (e) {
       print(e);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:lottie/lottie.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
 
 class ChatStoreScreen extends StatelessWidget {
@@ -8,7 +9,7 @@ class ChatStoreScreen extends StatelessWidget {
     return Scaffold(
       appBar: CustomNeumorphicAppBar(
           titleText: 'Store', ctx: context, myWidgetList: []),
-      body: Container(child: null),
+      body: Container(child: Lottie.asset('asset/girl_loader.json')),
     );
   }
 }

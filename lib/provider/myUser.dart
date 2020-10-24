@@ -39,4 +39,14 @@ class MyUser with ChangeNotifier {
       print(e);
     }
   }
+
+  Future<String> get userImageUrl async {
+    try {
+      final _data =
+          await _fireStore.collection('users').doc(_auth.currentUser.uid).get();
+      return _data.data()['userImageUrl'];
+    } catch (e) {
+      print(e);
+    }
+  }
 }

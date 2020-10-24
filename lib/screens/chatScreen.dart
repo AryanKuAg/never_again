@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:never_again/models/reportCardModel.dart';
 import 'package:never_again/provider/chatDataLogic.dart';
 import 'package:never_again/screens/chatStoreScreen.dart';
@@ -46,7 +47,9 @@ class _ChatScreenState extends State<ChatScreen> {
           future: ChatDataLogic().getAllReportCard(ctx: context),
           builder: (ctx, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return Center(
+                  child: Lottie.asset('asset/cat_loader.json',
+                      width: 100, height: 100));
             }
             return SingleChildScrollView(
               physics: BouncingScrollPhysics(),
@@ -62,8 +65,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                       children: [
                                         ListTile(
                                           leading: CircleAvatar(
-                                            child:
-                                                Image.asset('asset/aryan.jpg'),
+                                            backgroundImage: e.userImage != null
+                                                ? NetworkImage(e.userImage)
+                                                : null,
                                           ),
                                           title: Text(
                                             e.username,
@@ -254,9 +258,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             .toList()
                       ],
                     )
-                  : Center(
-                      child: Text('NO DATA FOUND!!!'),
-                    ),
+                  : Lottie.asset('asset/lonely_404.json'),
             );
           },
         ));

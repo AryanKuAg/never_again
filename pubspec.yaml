@@ -42,6 +42,7 @@ dependencies:
   firebase_storage: ^4.0.1
   shimmer: ^1.1.2
   google_fonts: ^1.1.1
+  lottie: ^0.7.0+1
 
 
 dev_dependencies:

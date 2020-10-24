@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class TimerOfHomePage extends StatefulWidget {
+class DateOfHomePage extends StatefulWidget {
   @override
-  _TimerOfHomePageState createState() => _TimerOfHomePageState();
+  _DateOfHomePageState createState() => _DateOfHomePageState();
 }
 
-class _TimerOfHomePageState extends State<TimerOfHomePage> {
+class _DateOfHomePageState extends State<DateOfHomePage> {
   String _timeString;
 
   @override
@@ -25,12 +25,9 @@ class _TimerOfHomePageState extends State<TimerOfHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     return Container(
-        child: Chip(
-      label: Text(_timeString,
-          style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 50 * textScaleFactor)),
+        child: Text(
+      _timeString,
     ));
   }
 
@@ -44,6 +41,6 @@ class _TimerOfHomePageState extends State<TimerOfHomePage> {
   }
 
   String _formatDateTime(DateTime dateTime) {
-    return DateFormat('hh:mm:ss').format(dateTime);
+    return DateFormat('MMM dd, yyyy').format(dateTime);
   }
 }

@@ -15,7 +15,7 @@ class ChatDataLogic with ChangeNotifier {
   final _fireStore = FirebaseFirestore.instance;
 
   Future<List> getAllReportCard({BuildContext ctx}) async {
-    final allDocs = await _fireStore.collection('users').get();
+    final allDocs = await _fireStore.collection('users').limit(50).get();
 
     // print(allDocs.docs[0].id);
     print('-------START-------');
@@ -38,13 +38,15 @@ class ChatDataLogic with ChangeNotifier {
               datetime: (element.data()['dateTime'] as Timestamp).toDate(),
               sperms: element.data()['sperms'],
               reason: element.data()['reason'].toString(),
-              public: element.data()['public']));
+              public: element.data()['public'],
+              userImage: element.data()['userImageUrl']));
         });
       }
     });
 
     print(_listOfReportCards.length.toString());
     notifyListeners();
+    _listOfReportCards.shuffle();
     return _listOfReportCards.reversed.toList();
   }
 }
