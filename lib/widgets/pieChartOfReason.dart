@@ -28,6 +28,21 @@ class _PieChartOfReasonState extends State<PieChartOfReason> {
                   width: 100, height: 100));
         }
 
+        if ((snapshot.data as QuerySnapshot).docs.length <= 0) {
+          return Column(
+            children: [
+              Lottie.asset('asset/girl_loader.json'),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'No Data Found 😅',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              )
+            ],
+          );
+        }
+
         final List _list = (snapshot.data as QuerySnapshot).docs.map((e) {
           return e.data()['reason'];
         }).toList();

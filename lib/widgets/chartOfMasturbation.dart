@@ -31,46 +31,57 @@ class _ChartOfMasturbationState extends State<ChartOfMasturbation> {
                     width: 100, height: 100));
           }
 
+          if ((snapshot.data as QuerySnapshot).docs.length <= 0) {
+            return Container();
+          }
+
           //list of sperm data
-          final List mysperms = (snapshot.data as QuerySnapshot)
-              .docs
-              .map((e) => e.data()['sperms'] * 1620)
-              .toList();
-          print(mysperms);
-
-          //get list value in the scale of 1 to 6 for the graph of sperm amount
-
+          // final List mySperms = (snapshot.data as QuerySnapshot)
+          //     .docs
+          //     .map((e) => e.data()['sperms'] * 1.1)
+          //     .toList();
+          // print('my sperms = ${mysperms.toString()}');
+          //
+          // //get list value in the scale of 1 to 6 for the graph of sperm amount
+          //
           final List myIndexOfAmount =
               (snapshot.data as QuerySnapshot).docs.map((e) {
-            final _data = (e.data()['sperms'] * 1620 as int);
+            final _data =
+                (e.data()['sperms'] * 1.1 as double); //1.1 million dollar
 
-            int o = 6;
-
-            mysperms.forEach((element) {
-              if (_data < element) o--;
-            });
-
-            return o;
+            if (_data > 100.0) {
+              return 6;
+            } else if (_data <= 100.0 && _data > 80.0) {
+              return 5;
+            } else if (_data <= 80.0 && _data > 60.0) {
+              return 4;
+            } else if (_data <= 60.0 && _data > 40.0) {
+              return 3;
+            } else if (_data <= 40.0 && _data > 20.0) {
+              return 2;
+            } else {
+              return 1;
+            }
           }).toList();
 
           print('index  == $myIndexOfAmount');
 
 //4k, 2M ,3B stuff like that so don't worry
-          final List sperms = (snapshot.data as QuerySnapshot).docs.map((e) {
-            final _data = (e.data()['sperms'] * 1620 as int);
-            if (_data.toString().length > 9) {
-              return '${_data.toString().substring(0, _data.toString().length - 9)}B';
-            } else if (_data.toString().length > 6) {
-              return '${_data.toString().substring(0, _data.toString().length - 6)}M';
-            } else if (_data.toString().length > 3) {
-              return '${_data.toString().substring(0, _data.toString().length - 3)}K';
-            } else {
-              return _data.round().toString();
-            }
-          }).toList();
-          sperms.sort((a, b) => a.compareTo(b));
-
-          print(sperms);
+//           final List sperms = (snapshot.data as QuerySnapshot).docs.map((e) {
+//             final _data = (e.data()['sperms'] * 1620 as int);
+//             if (_data.toString().length > 9) {
+//               return '${_data.toString().substring(0, _data.toString().length - 9)}B';
+//             } else if (_data.toString().length > 6) {
+//               return '${_data.toString().substring(0, _data.toString().length - 6)}M';
+//             } else if (_data.toString().length > 3) {
+//               return '${_data.toString().substring(0, _data.toString().length - 3)}K';
+//             } else {
+//               return _data.round().toString();
+//             }
+//           }).toList();
+//           sperms.sort((a, b) => a.compareTo(b));
+//
+//           print(sperms);
 
           return Container(
             margin: EdgeInsets.all(mediaQuery.height * 0.01),
@@ -101,7 +112,7 @@ class _ChartOfMasturbationState extends State<ChartOfMasturbation> {
                     getTextStyles: (value) => const TextStyle(
                         color: Color(0xff68737d),
                         fontWeight: FontWeight.bold,
-                        fontSize: 16),
+                        fontSize: 12),
                     getTitles: (value) {
                       switch (value.toInt()) {
                         case 2:
@@ -113,23 +124,23 @@ class _ChartOfMasturbationState extends State<ChartOfMasturbation> {
                       }
                       return '';
                     },
-                    margin: 8,
+                    margin: 0,
                   ),
                   leftTitles: SideTitles(
                     showTitles: true,
                     getTextStyles: (value) => const TextStyle(
                       color: Color(0xff67727d),
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                      fontSize: 10,
                     ),
                     getTitles: (value) {
                       switch (value.toInt()) {
                         case 1:
-                          return '${sperms.first}';
+                          return '1M';
                         case 3:
-                          return '${sperms[(sperms.length ~/ 2).round()]}';
+                          return '50M';
                         case 5:
-                          return '${sperms.last}';
+                          return '100M';
                       }
                       return '';
                     },
@@ -148,13 +159,41 @@ class _ChartOfMasturbationState extends State<ChartOfMasturbation> {
                 lineBarsData: [
                   LineChartBarData(
                     spots: [
-                      FlSpot(0, myIndexOfAmount[0].toDouble() ?? 0),
-                      FlSpot(2.2, myIndexOfAmount[1].toDouble() ?? 0),
-                      FlSpot(5, myIndexOfAmount[2].toDouble() ?? 0),
-                      FlSpot(7, 3.1),
-                      FlSpot(8.5, myIndexOfAmount[3].toDouble() ?? 0),
-                      FlSpot(9.5, 3),
-                      FlSpot(11, myIndexOfAmount[4].toDouble() ?? 0),
+                      FlSpot(
+                          0,
+                          myIndexOfAmount.length > 0
+                              ? myIndexOfAmount[0].toDouble()
+                              : 0),
+                      FlSpot(
+                          2.2,
+                          myIndexOfAmount.length > 1
+                              ? myIndexOfAmount[1].toDouble()
+                              : 0),
+                      FlSpot(
+                          5,
+                          myIndexOfAmount.length > 2
+                              ? myIndexOfAmount[2].toDouble()
+                              : 0),
+                      FlSpot(
+                          7,
+                          myIndexOfAmount.length > 2
+                              ? myIndexOfAmount[2].toDouble()
+                              : 0),
+                      FlSpot(
+                          8.5,
+                          myIndexOfAmount.length > 3
+                              ? myIndexOfAmount[3].toDouble()
+                              : 0),
+                      FlSpot(
+                          9.5,
+                          myIndexOfAmount.length > 3
+                              ? myIndexOfAmount[3].toDouble()
+                              : 0),
+                      FlSpot(
+                          11,
+                          myIndexOfAmount.length > 4
+                              ? myIndexOfAmount[4].toDouble()
+                              : 0),
                     ],
                     isCurved: true,
                     colors: [

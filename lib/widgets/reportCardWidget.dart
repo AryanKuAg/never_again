@@ -99,7 +99,7 @@ class ReportCardWidget extends StatelessWidget {
                                                 width: 10,
                                               ),
                                               Text(
-                                                '${(e['sperms'] * 18.6 as double).toInt().toString()} TB',
+                                                '${(e['sperms'] * 11.2 as double).toInt().toString()}PB DNA',
                                                 style: TextStyle(
                                                     fontSize:
                                                         mediaQuery.height *
@@ -120,7 +120,7 @@ class ReportCardWidget extends StatelessWidget {
                                                 width: 10,
                                               ),
                                               Text(
-                                                '\$ ${(e['sperms'] * 1620.0 as double).toInt().toString()} ',
+                                                '\$ ${(e['sperms'] * 1.12 as double).toInt().toString()}M',
                                                 style: TextStyle(
                                                     fontSize:
                                                         mediaQuery.height *

@@ -145,7 +145,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                             width: 10,
                                                           ),
                                                           Text(
-                                                            '${(e.sperms * 18.6).toString()} TB',
+                                                            '${(e.sperms * 11.2).toInt().toString()}PB DNA',
                                                             style: TextStyle(
                                                                 fontSize: mediaQuery
                                                                         .height *
@@ -170,7 +170,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                             width: 10,
                                                           ),
                                                           Text(
-                                                            '\$ ${(e.sperms * 1620.0).toString()} ',
+                                                            '\$ ${(e.sperms * 1.12).toInt().toString()}M',
                                                             style: TextStyle(
                                                                 fontSize: mediaQuery
                                                                         .height *

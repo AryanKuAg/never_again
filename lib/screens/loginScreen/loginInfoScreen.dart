@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lottie/lottie.dart';
 import 'package:never_again/provider/loginLogic.dart';
 
 enum Gender {
@@ -40,7 +41,7 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
 
   void _pickImageGallery() async {
     final pickedImageFile = await ImagePicker()
-        .getImage(source: ImageSource.gallery, imageQuality: 20);
+        .getImage(source: ImageSource.gallery, imageQuality: 10);
     setState(() {
       _pickedImage = File(pickedImageFile.path);
     });
@@ -55,7 +56,7 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
 
     return Scaffold(
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(child: Lottie.asset('asset/cat_loader.json'))
           : SafeArea(
               child: Container(
                 margin: EdgeInsets.all(15),

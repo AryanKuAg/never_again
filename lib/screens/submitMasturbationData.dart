@@ -48,10 +48,12 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
   double mySliderValue = 10.0;
   AmountOfSperm amountOfSperm = AmountOfSperm.FewTeaspoon;
   Future<String> myFuture;
+  Future<String> myUserImageFuture;
   @override
   void initState() {
     super.initState();
     myFuture = MyUser().getUsername;
+    myUserImageFuture = MyUser().userImageUrl;
   }
 
   @override
@@ -65,7 +67,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
       body: Container(
         width: double.infinity,
         child: FutureBuilder(
-          future: MyUser().userImageUrl,
+          future: myUserImageFuture,
           builder: (ctx, futureSnap) {
             if (futureSnap.connectionState == ConnectionState.waiting) {
               return Lottie.asset('asset/cat_loader.json',
