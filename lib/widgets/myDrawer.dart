@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:never_again/screens/HomeScreen.dart';
+import 'package:never_again/screens/rewardScreen.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -33,16 +35,19 @@ class MyDrawer extends StatelessWidget {
                   ),
                 ),
                 onTap: () {
-                  if (Navigator.of(context).canPop())
-                    Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (ctx) => HomeScreen()));
                 },
               ),
               GestureDetector(
                 child: ListTile(
                   leading: Icon(Icons.star),
-                  title: Text('Rate this app'),
+                  title: Text('Rewards'),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (ctx) => RewardScreen()));
+                },
               ),
               GestureDetector(
                 child: ListTile(

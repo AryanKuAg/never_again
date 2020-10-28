@@ -123,9 +123,14 @@ class ProfileScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                snapshot.data.data()['username'].toString() ??
+                                snapshot.data
+                                        .data()['username']
+                                        .toString()
+                                        .toUpperCase() ??
                                     'Username',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(20.0),
