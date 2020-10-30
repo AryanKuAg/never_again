@@ -1,7 +1,8 @@
 class RewardModel {
+  final String id;
   final String about;
   final String rewardImage;
   final Duration myDuration;
 
-  RewardModel({this.about, this.myDuration, this.rewardImage});
+  RewardModel({this.id, this.about, this.myDuration, this.rewardImage});
 }

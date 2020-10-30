@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:never_again/screens/HomeScreen.dart';
-import 'package:never_again/screens/rewardScreen.dart';
+import 'package:never_again/screens/rewardsDrawerScreen.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -34,10 +34,7 @@ class MyDrawer extends StatelessWidget {
                     ),
                   ),
                 ),
-                onTap: () {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (ctx) => HomeScreen()));
-                },
+                onTap: () {},
               ),
               GestureDetector(
                 child: ListTile(

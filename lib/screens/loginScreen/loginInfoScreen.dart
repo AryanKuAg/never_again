@@ -5,7 +5,9 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
+import 'package:never_again/DBhelper/localDatabase.dart';
 import 'package:never_again/provider/loginLogic.dart';
+import 'package:provider/provider.dart';
 
 enum Gender {
   male,
@@ -53,7 +55,7 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
     final mediaQuery = MediaQuery.of(context).size;
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final viewInsets = MediaQuery.of(context).viewInsets;
-
+    final localDatabase = Provider.of<LocalDatabase>(context);
     return Scaffold(
       body: _isLoading
           ? Center(child: Lottie.asset('asset/cat_loader.json'))
@@ -66,7 +68,7 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
                   children: [
                     GestureDetector(
                       child: CircleAvatar(
-                        backgroundColor: Colors.white70,
+                        backgroundColor: Colors.black54,
                         radius: mediaQuery.height * 0.08,
                         child: Icon(Icons.camera_alt),
                         backgroundImage: _pickedImage != null
@@ -259,6 +261,7 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
                             setState(() {
                               _isLoading = true;
                             });
+                            localDatabase.myDateTime = DateTime.now();
                             LoginLogic.loginAnonymously(
                                 username: textEditingController.text,
                                 age: userAge.round(),

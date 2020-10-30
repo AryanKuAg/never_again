@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:never_again/DBhelper/localDatabase.dart';
 import 'package:never_again/provider/chatDataLogic.dart';
 import 'package:never_again/provider/loginLogic.dart';
 import 'package:never_again/provider/myUser.dart';
@@ -33,6 +34,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => ChatDataLogic(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => LocalDatabase(),
         ),
       ],
       child: NeumorphicApp(

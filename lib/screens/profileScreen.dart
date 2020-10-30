@@ -9,6 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:never_again/provider/myUser.dart';
 
 import 'package:never_again/screens/editUserProfileScreen.dart';
+import 'package:never_again/screens/getRewardScreen.dart';
 import 'package:never_again/widgets/iconNameFunction.dart';
 import 'package:never_again/widgets/myDrawer.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
@@ -79,7 +80,12 @@ class ProfileScreen extends StatelessWidget {
                                       myName: 'Saved',
                                     ),
                                     IconNameFunction(
-                                      myFunction: () {},
+                                      myFunction: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (ctx) =>
+                                                    GetRewardScreen()));
+                                      },
                                       myIcon: Image.asset('asset/medal.png'),
                                       myName: 'Rewards',
                                     ),

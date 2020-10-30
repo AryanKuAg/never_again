@@ -237,7 +237,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   margin: EdgeInsets.all(5),
                                                   child: NeumorphicButton(
                                                     child: Text(
-                                                      'Share',
+                                                      'Save',
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold),
