@@ -254,14 +254,14 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
                               fontWeight: FontWeight.bold,
                               fontSize: textScaleFactor * 18),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (textEditingController.text.length > 2 &&
                               selectedGender != null &&
                               _pickedImage != null) {
                             setState(() {
                               _isLoading = true;
                             });
-                            localDatabase.myDateTime = DateTime.now();
+                            await localDatabase.insertDateTime(DateTime.now());
                             LoginLogic.loginAnonymously(
                                 username: textEditingController.text,
                                 age: userAge.round(),

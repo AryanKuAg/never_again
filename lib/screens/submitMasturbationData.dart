@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
+import 'package:never_again/DBhelper/localDatabase.dart';
 import 'package:never_again/provider/myUser.dart';
 import 'package:never_again/provider/reportCardLogic.dart';
 import 'package:provider/provider.dart';
@@ -49,6 +50,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
   AmountOfSperm amountOfSperm = AmountOfSperm.FewTeaspoon;
   Future<String> myFuture;
   Future<String> myUserImageFuture;
+
   @override
   void initState() {
     super.initState();
@@ -61,6 +63,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final mediaQuery = MediaQuery.of(context).size;
     final reportCardLogic = Provider.of<ReportCardLogic>(context);
+    final dateProvider = Provider.of<LocalDatabase>(context);
 
     return Scaffold(
       appBar: NeumorphicAppBar(),
@@ -444,6 +447,8 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                                   dateTime: DateTime.now(),
                                   username: futureSnapshot.data.toString(),
                                   userImageUrl: futureSnap.data);
+                              dateProvider.insertDateTime(DateTime.now());
+                              dateProvider.uploadListToServer();
                               Navigator.of(context).pop();
                             } else {
                               showDialog(

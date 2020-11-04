@@ -10,16 +10,17 @@ class DateOfHomePage extends StatefulWidget {
 
 class _DateOfHomePageState extends State<DateOfHomePage> {
   String _timeString;
-
+  Timer _myTimer;
   @override
   void initState() {
     _timeString = _formatDateTime(DateTime.now());
-    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
+    _myTimer = Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
     super.initState();
   }
 
   @override
   void dispose() {
+    _myTimer.cancel();
     super.dispose();
   }
 

@@ -51,7 +51,7 @@ class ProfileScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               AvatarGlow(
-                                glowColor: Colors.purple,
+                                glowColor: Colors.pink,
                                 endRadius: 100,
                                 child: CircleAvatar(
                                   backgroundImage:

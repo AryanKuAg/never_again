@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:never_again/provider/rewardsList.dart';
 import 'package:never_again/tabbar.dart';
 
 class LoginLogic with ChangeNotifier {
@@ -36,6 +37,7 @@ class LoginLogic with ChangeNotifier {
         'username': username,
         'age': age,
         'isMale': isMale,
+        'rewards': rewardList.map((e) => {'id': e.id, 'frequency': 0}).toList(),
         'bio': 'My Bio',
         'masturbation': true,
         'userImageUrl': url

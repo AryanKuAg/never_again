@@ -60,7 +60,7 @@ class NoSelectionScreen extends StatelessWidget {
                   margin: EdgeInsets.all(20),
                   child: Center(
                       child: Text(
-                    'Generate Report',
+                    'Read Stories',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )),

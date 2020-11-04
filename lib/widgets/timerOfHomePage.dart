@@ -13,22 +13,25 @@ class TimerOfHomePage extends StatefulWidget {
 class _TimerOfHomePageState extends State<TimerOfHomePage> {
   String _timeString;
   DateTime _myDateTime;
-
+  Timer _myTimer;
   @override
   void initState() {
     _timeString = _formatDateTime(DateTime.now());
-    Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
+    _myTimer = Timer.periodic(Duration(seconds: 1), (Timer t) => _getTime());
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    _myDateTime = Provider.of<LocalDatabase>(context).myDateTime;
+    Provider.of<LocalDatabase>(context)
+        .getMasturbationTimeInString
+        .then((value) => _myDateTime = value);
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
+    _myTimer.cancel();
     super.dispose();
   }
 
@@ -44,7 +47,7 @@ class _TimerOfHomePageState extends State<TimerOfHomePage> {
           Column(
             children: [
               Text(
-                  '${DateTime.now().difference(_myDateTime).inDays.remainder(60)}',
+                  '${DateTime.now().difference(_myDateTime ?? DateTime.now()).inDays.remainder(60)}',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 50 * textScaleFactor)),
@@ -60,7 +63,7 @@ class _TimerOfHomePageState extends State<TimerOfHomePage> {
           Column(
             children: [
               Text(
-                  '${DateTime.now().difference(_myDateTime).inHours.remainder(60)}',
+                  '${DateTime.now().difference(_myDateTime ?? DateTime.now()).inHours.remainder(60)}',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 50 * textScaleFactor)),
@@ -76,7 +79,7 @@ class _TimerOfHomePageState extends State<TimerOfHomePage> {
           Column(
             children: [
               Text(
-                  '${DateTime.now().difference(_myDateTime).inMinutes.remainder(60)}',
+                  '${DateTime.now().difference(_myDateTime ?? DateTime.now()).inMinutes.remainder(60)}',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 50 * textScaleFactor)),
@@ -92,7 +95,7 @@ class _TimerOfHomePageState extends State<TimerOfHomePage> {
           Column(
             children: [
               Text(
-                  '${DateTime.now().difference(_myDateTime).inSeconds.remainder(60)}',
+                  '${DateTime.now().difference(_myDateTime ?? DateTime.now()).inSeconds.remainder(60)}',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 50 * textScaleFactor)),
