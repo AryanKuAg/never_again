@@ -47,7 +47,7 @@ class _TimerOfHomePageState extends State<TimerOfHomePage> {
           Column(
             children: [
               Text(
-                  '${DateTime.now().difference(_myDateTime ?? DateTime.now()).inDays.remainder(60)}',
+                  '${DateTime.now().difference(_myDateTime ?? DateTime.now()).inDays}',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 50 * textScaleFactor)),
@@ -63,7 +63,7 @@ class _TimerOfHomePageState extends State<TimerOfHomePage> {
           Column(
             children: [
               Text(
-                  '${DateTime.now().difference(_myDateTime ?? DateTime.now()).inHours.remainder(60)}',
+                  '${DateTime.now().difference(_myDateTime ?? DateTime.now()).inHours.remainder(24)}',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 50 * textScaleFactor)),

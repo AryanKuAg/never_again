@@ -14,9 +14,16 @@ import 'package:never_again/widgets/iconNameFunction.dart';
 import 'package:never_again/widgets/myDrawer.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   final _firestore = FirebaseFirestore.instance;
+
   final _uid = FirebaseAuth.instance.currentUser.uid;
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
@@ -31,8 +38,12 @@ class ProfileScreen extends StatelessWidget {
             NeumorphicButton(
               child: Icon(Icons.edit),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => EditUserProfileScreen()));
+                Navigator.of(context)
+                    .push(MaterialPageRoute(
+                        builder: (ctx) => EditUserProfileScreen()))
+                    .then((value) {
+                  setState(() {});
+                });
               },
             ),
           ]),

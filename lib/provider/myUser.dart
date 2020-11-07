@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:never_again/provider/loginLogic.dart';
 
 class MyUser with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
@@ -29,12 +32,31 @@ class MyUser with ChangeNotifier {
     return doc.size;
   }
 
-  Future<void> updateUserInfo({String username, bio}) async {
+  Future<void> updateUserInfo({String username, bio, File updatedImage}) async {
+    print(
+        'username:$username, bio:$bio, updatedImage:${updatedImage.toString()}');
     try {
-      await _fireStore
-          .collection('users')
-          .doc(_auth.currentUser.uid)
-          .update({'username': username, 'bio': bio});
+      String url;
+      if (updatedImage != null) {
+        final ref = LoginLogic()
+            .fbStorage
+            .ref()
+            .child('user_image')
+            .child(LoginLogic().auth.currentUser.uid + '.jpg');
+        await ref.putFile(updatedImage).onComplete;
+        url = await ref.getDownloadURL();
+      }
+
+      await _fireStore.collection('users').doc(_auth.currentUser.uid).update({
+        'username': username,
+        'bio': bio,
+      });
+
+      if (updatedImage != null)
+        await _fireStore
+            .collection('users')
+            .doc(_auth.currentUser.uid)
+            .update({'userImageUrl': url});
     } catch (e) {
       print(e);
     }

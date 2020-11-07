@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:never_again/provider/loginLogic.dart';
 import 'package:never_again/provider/myUser.dart';
 import 'package:never_again/screens/loginScreen/signupScreen.dart';
@@ -15,6 +17,25 @@ class EditUserProfileScreen extends StatefulWidget {
 class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   final nameTextController = TextEditingController();
   final bioTextController = TextEditingController();
+  File _pickedImage;
+
+  void _pickImageCamera() async {
+    final pickedImageFile = await ImagePicker()
+        .getImage(source: ImageSource.camera, imageQuality: 20);
+    setState(() {
+      _pickedImage = File(pickedImageFile.path);
+    });
+    if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+  }
+
+  void _pickImageGallery() async {
+    final pickedImageFile = await ImagePicker()
+        .getImage(source: ImageSource.gallery, imageQuality: 10);
+    setState(() {
+      _pickedImage = File(pickedImageFile.path);
+    });
+    if (Navigator.of(context).canPop()) Navigator.of(context).pop();
+  }
 
   @override
   void initState() {
@@ -34,6 +55,7 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final navigator = Navigator.of(context);
+    final mediaQuery = MediaQuery.of(context).size;
     return Scaffold(
       appBar: CustomNeumorphicAppBar(
           ctx: context,
@@ -46,7 +68,8 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
                     bioTextController.text.length > 2)
                   MyUser().updateUserInfo(
                       username: nameTextController.text.trim(),
-                      bio: bioTextController.text.trim());
+                      bio: bioTextController.text.trim(),
+                      updatedImage: _pickedImage);
                 navigator.pop();
               },
             ),
@@ -57,6 +80,39 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            GestureDetector(
+              child: CircleAvatar(
+                backgroundColor: Colors.black54,
+                radius: mediaQuery.height * 0.08,
+                child: Icon(Icons.camera_alt),
+                backgroundImage:
+                    _pickedImage != null ? FileImage(_pickedImage) : null,
+              ),
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                          actions: [
+                            IconButton(
+                              icon: Icon(
+                                Icons.camera_alt_rounded,
+                              ),
+                              onPressed: _pickImageCamera,
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.folder,
+                              ),
+                              onPressed: _pickImageGallery,
+                            )
+                          ],
+                          content: Text('Choose The Source'),
+                        ));
+              },
+            ),
+            SizedBox(
+              height: 15,
+            ),
             Neumorphic(
               child: TextField(
                 controller: nameTextController,

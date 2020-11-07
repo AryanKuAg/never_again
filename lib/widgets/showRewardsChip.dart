@@ -20,6 +20,8 @@ class _ShowRewardsChipState extends State<ShowRewardsChip> {
   Timer _myTimer;
   var randomQuote;
   var localDatabase;
+  List previousList = [];
+
   @override
   void initState() {
     _myTimer = Timer.periodic(Duration(seconds: 3), (_) => myRefresh());
@@ -75,13 +77,17 @@ class _ShowRewardsChipState extends State<ShowRewardsChip> {
   }
 
   void myRefresh() {
-    var previousList = _listOfRewards;
+    previousList = _listOfRewards;
+    print('pervious list $previousList');
+
     _listOfRewards = rewardList
         .where(
-          (e) => e.myDuration < DateTime.now().difference(_myDateTime),
+          (e) =>
+              e.myDuration <
+              DateTime.now().difference(_myDateTime ?? DateTime.now()),
         )
         .toList();
-
+    print('list of rewards $_listOfRewards');
     // print('_listOfRewards$_listOfRewards');
     if (_listOfRewards.length > 0) {
       localDatabase.insertMyRewards(_listOfRewards);
@@ -89,7 +95,8 @@ class _ShowRewardsChipState extends State<ShowRewardsChip> {
     print(
         'previousList:${previousList.length} ?? newList:${_listOfRewards.length}');
 
-    if (_listOfRewards.length != previousList.length) {
+    if (previousList.length > 0 &&
+        _listOfRewards.length != previousList.length) {
       showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
