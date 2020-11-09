@@ -27,8 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ctx: context,
           myWidgetList: [
             NeumorphicButton(
-              child: Icon(Icons.ac_unit_outlined),
+              child: Icon(Icons.bubble_chart),
               onPressed: () {},
+              duration: Duration(milliseconds: 400),
             ),
           ]),
       body: Container(
@@ -89,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: mediaQuery.width * 0.4,
       height: mediaQuery.height * 0.2,
       child: NeumorphicButton(
+        duration: Duration(milliseconds: 400),
         child: Center(
             child: Text(
           myText,

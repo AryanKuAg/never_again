@@ -99,6 +99,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: NeumorphicRadio(
+                                          duration: Duration(milliseconds: 400),
                                           child: Container(
                                             width: mediaQuery.width * 0.28,
                                             child: Column(
@@ -137,6 +138,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                                         ),
                                       ),
                                       NeumorphicRadio(
+                                        duration: Duration(milliseconds: 400),
                                         child: Container(
                                           width: mediaQuery.width * 0.28,
                                           child: Column(
@@ -177,6 +179,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: NeumorphicRadio(
+                                          duration: Duration(milliseconds: 400),
                                           child: Container(
                                             width: mediaQuery.width * 0.28,
                                             child: Column(
@@ -227,6 +230,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: NeumorphicButton(
+                                        duration: Duration(milliseconds: 400),
                                         child: Text(
                                           'Custom Selection',
                                           style: TextStyle(
@@ -276,6 +280,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                           margin: EdgeInsets.all(10),
                           width: double.infinity,
                           child: Neumorphic(
+                            duration: Duration(milliseconds: 400),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -346,6 +351,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                             child: Container(
                               margin: EdgeInsets.all(10),
                               child: NeumorphicRadio(
+                                duration: Duration(milliseconds: 400),
                                 child: Padding(
                                   padding:
                                       EdgeInsets.all(mediaQuery.height * 0.05),
@@ -386,6 +392,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                             child: Container(
                               margin: EdgeInsets.all(10),
                               child: NeumorphicRadio(
+                                duration: Duration(milliseconds: 400),
                                 child: Padding(
                                   padding:
                                       EdgeInsets.all(mediaQuery.height * 0.05),
@@ -428,6 +435,7 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                         width: double.infinity,
                         margin: EdgeInsets.all(12),
                         child: NeumorphicButton(
+                          duration: Duration(milliseconds: 400),
                           child: Center(
                               child: Text(
                             'Submit Data',

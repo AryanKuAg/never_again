@@ -17,7 +17,6 @@ class ChatDataLogic with ChangeNotifier {
   Future<List> getAllReportCard({BuildContext ctx}) async {
     final allDocs = await _fireStore.collection('users').limit(50).get();
 
-    // print(allDocs.docs[0].id);
     print('-------START-------');
     await Future.forEach(allDocs.docs, (e) async {
       // list of docs of reportcard data

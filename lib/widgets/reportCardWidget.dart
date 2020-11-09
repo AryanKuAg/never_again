@@ -143,56 +143,56 @@ class ReportCardWidget extends StatelessWidget {
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.all(8),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      child: NeumorphicButton(
-                                        child: Text(
-                                          'Like',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        onPressed: () {},
-                                      ),
-                                      margin: EdgeInsets.all(5),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.all(5),
-                                      child: NeumorphicButton(
-                                        child: Text(
-                                          'Comment',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        onPressed: () {},
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.all(5),
-                                      child: NeumorphicButton(
-                                        child: Text(
-                                          'Share',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        onPressed: () {},
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
+                            // Container(
+                            //   margin: EdgeInsets.all(8),
+                            //   child: Row(
+                            //     mainAxisSize: MainAxisSize.max,
+                            //     children: [
+                            //       Expanded(
+                            //         child: Container(
+                            //           child: NeumorphicButton(
+                            //             child: Text(
+                            //               'Like',
+                            //               textAlign: TextAlign.center,
+                            //               style: TextStyle(
+                            //                   fontWeight: FontWeight.bold),
+                            //             ),
+                            //             onPressed: () {},
+                            //           ),
+                            //           margin: EdgeInsets.all(5),
+                            //         ),
+                            //       ),
+                            //       Expanded(
+                            //         child: Container(
+                            //           margin: EdgeInsets.all(5),
+                            //           child: NeumorphicButton(
+                            //             child: Text(
+                            //               'Comment',
+                            //               textAlign: TextAlign.center,
+                            //               style: TextStyle(
+                            //                   fontWeight: FontWeight.bold),
+                            //             ),
+                            //             onPressed: () {},
+                            //           ),
+                            //         ),
+                            //       ),
+                            //       Expanded(
+                            //         child: Container(
+                            //           margin: EdgeInsets.all(5),
+                            //           child: NeumorphicButton(
+                            //             child: Text(
+                            //               'Share',
+                            //               style: TextStyle(
+                            //                   fontWeight: FontWeight.bold),
+                            //               textAlign: TextAlign.center,
+                            //             ),
+                            //             onPressed: () {},
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // )
                           ],
                         ),
                       ),

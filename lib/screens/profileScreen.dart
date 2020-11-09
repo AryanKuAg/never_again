@@ -77,56 +77,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   radius: mediaQuery.height * 0.08,
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    IconNameFunction(
-                                      myFunction: () {
-                                        print('just pressede');
-                                      },
-                                      myIcon: Image.asset('asset/bookmark.png'),
-                                      myName: 'Saved',
-                                    ),
-                                    IconNameFunction(
-                                      myFunction: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (ctx) =>
-                                                    GetRewardScreen()));
-                                      },
-                                      myIcon: Image.asset('asset/medal.png'),
-                                      myName: 'Rewards',
-                                    ),
-                                    IconNameFunction(
-                                      myFunction: () {},
-                                      myIcon: Image.asset('asset/giftbox.png'),
-                                      myName: 'Gifts',
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    IconNameFunction(
-                                      myFunction: () {},
-                                      myIcon: Image.asset('asset/love.png'),
-                                      myName: 'Loved',
-                                    ),
-                                    IconNameFunction(
-                                      myFunction: () {},
-                                      myIcon: Image.asset('asset/like.png'),
-                                      myName: 'Liked',
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   child: Row(
+                              //     mainAxisAlignment:
+                              //         MainAxisAlignment.spaceAround,
+                              //     children: [
+                              //       IconNameFunction(
+                              //         myFunction: () {
+                              //           print('just pressede');
+                              //         },
+                              //         myIcon: Image.asset('asset/bookmark.png'),
+                              //         myName: 'Saved',
+                              //       ),
+                              //       IconNameFunction(
+                              //         myFunction: () {
+                              //           Navigator.of(context).push(
+                              //               MaterialPageRoute(
+                              //                   builder: (ctx) =>
+                              //                       GetRewardScreen()));
+                              //         },
+                              //         myIcon: Image.asset('asset/medal.png'),
+                              //         myName: 'Rewards',
+                              //       ),
+                              //       IconNameFunction(
+                              //         myFunction: () {},
+                              //         myIcon: Image.asset('asset/giftbox.png'),
+                              //         myName: 'Gifts',
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                              // Padding(
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   child: Row(
+                              //     mainAxisAlignment:
+                              //         MainAxisAlignment.spaceAround,
+                              //     children: [
+                              //       IconNameFunction(
+                              //         myFunction: () {},
+                              //         myIcon: Image.asset('asset/love.png'),
+                              //         myName: 'Loved',
+                              //       ),
+                              //       IconNameFunction(
+                              //         myFunction: () {},
+                              //         myIcon: Image.asset('asset/like.png'),
+                              //         myName: 'Liked',
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
                               Chip(
                                 label: NeumorphicText(
                                   '${reportCardSnapshot.data.toString() ?? '0'} Uploads',

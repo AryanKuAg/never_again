@@ -30,18 +30,19 @@ class _ChatScreenState extends State<ChatScreen> {
     final mediaQuery = MediaQuery.of(context).size;
 
     return Scaffold(
+        resizeToAvoidBottomPadding: false,
         drawer: MyDrawer(),
         appBar: CustomNeumorphicAppBar(
             ctx: context,
             titleText: 'Chat',
             myWidgetList: [
-              NeumorphicButton(
-                child: Icon(Icons.add_shopping_cart_rounded),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (ctx) => ChatStoreScreen()));
-                },
-              )
+              // NeumorphicButton(
+              //               //   child: Icon(Icons.add_shopping_cart_rounded),
+              //               //   onPressed: () {
+              //               //     Navigator.of(context).push(
+              //               //         MaterialPageRoute(builder: (ctx) => ChatStoreScreen()));
+              //               //   },
+              //               // ),
             ]),
         body: FutureBuilder(
           future: ChatDataLogic().getAllReportCard(ctx: context),
@@ -195,62 +196,104 @@ class _ChatScreenState extends State<ChatScreen> {
                                                 fontWeight: FontWeight.bold),
                                           ),
                                         ),
-                                        Container(
-                                          margin: EdgeInsets.all(8),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Expanded(
-                                                child: Container(
-                                                  child: NeumorphicButton(
-                                                    child: Text(
-                                                      'Like',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    onPressed: () {},
-                                                  ),
-                                                  margin: EdgeInsets.all(5),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Container(
-                                                  margin: EdgeInsets.all(5),
-                                                  child: NeumorphicButton(
-                                                    child: Text(
-                                                      'Comment',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    onPressed: () {},
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Container(
-                                                  margin: EdgeInsets.all(5),
-                                                  child: NeumorphicButton(
-                                                    child: Text(
-                                                      'Save',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                    onPressed: () {},
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
+                                        // Container(
+                                        //   margin: EdgeInsets.all(8),
+                                        //   child: Row(
+                                        //     mainAxisSize: MainAxisSize.max,
+                                        //     children: [
+                                        //       Expanded(
+                                        //         child: Container(
+                                        //           child: NeumorphicButton(
+                                        //             child: Text(
+                                        //               'Like',
+                                        //               textAlign:
+                                        //                   TextAlign.center,
+                                        //               style: TextStyle(
+                                        //                   fontWeight:
+                                        //                       FontWeight.bold),
+                                        //             ),
+                                        //             onPressed: () {},
+                                        //           ),
+                                        //           margin: EdgeInsets.all(5),
+                                        //         ),
+                                        //       ),
+                                        //       Expanded(
+                                        //         child: Container(
+                                        //           margin: EdgeInsets.all(5),
+                                        //           child: NeumorphicButton(
+                                        //             child: Text(
+                                        //               'Comment',
+                                        //               textAlign:
+                                        //                   TextAlign.center,
+                                        //               style: TextStyle(
+                                        //                   fontWeight:
+                                        //                       FontWeight.bold),
+                                        //             ),
+                                        //             onPressed: () {
+                                        //               showModalBottomSheet(
+                                        //                   context: context,
+                                        //                   backgroundColor:
+                                        //                       Colors.white70
+                                        //                           .withOpacity(
+                                        //                               0),
+                                        //                   builder: (ctx) =>
+                                        //                       Container(
+                                        //                         decoration: BoxDecoration(
+                                        //                             color: Colors
+                                        //                                 .white,
+                                        //                             borderRadius:
+                                        //                                 BorderRadius.vertical(
+                                        //                                     top:
+                                        //                                         Radius.circular(20))),
+                                        //                         child: Column(
+                                        //                           mainAxisSize:
+                                        //                               MainAxisSize
+                                        //                                   .min,
+                                        //                           children: [
+                                        //                             Text('hey'),
+                                        //                             Text('hey'),
+                                        //                             Text('hey'),
+                                        //                             Text('hey'),
+                                        //                             Text('hey'),
+                                        //                             Text('hey'),
+                                        //                             Text('hey'),
+                                        //                             Text('hey'),
+                                        //                             Text('hey'),
+                                        //                             Text('hey'),
+                                        //                             Spacer(),
+                                        //                             TextField()
+                                        //                           ],
+                                        //                         ),
+                                        //                       ));
+                                        //             },
+                                        //           ),
+                                        //         ),
+                                        //       ),
+                                        //       Expanded(
+                                        //         child: Container(
+                                        //           margin: EdgeInsets.all(5),
+                                        //           child: NeumorphicButton(
+                                        //             child: Text(
+                                        //               'Save',
+                                        //               style: TextStyle(
+                                        //                   fontWeight:
+                                        //                       FontWeight.bold),
+                                        //               textAlign:
+                                        //                   TextAlign.center,
+                                        //             ),
+                                        //             onPressed: () {},
+                                        //           ),
+                                        //         ),
+                                        //       ),
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                        if (false)
+                                          Neumorphic(
+                                            margin: EdgeInsets.all(10),
+                                            style: NeumorphicStyle(
+                                                shape: NeumorphicShape.concave),
+                                          )
                                       ],
                                     ),
                                   ),

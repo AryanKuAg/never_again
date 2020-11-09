@@ -3,18 +3,18 @@ import 'package:never_again/models/rewardModel.dart';
 final List<RewardModel> rewardList = <RewardModel>[
   RewardModel(
       id: 'angle',
-      about: 'Welcome Eagle | Welcome Reward For Your Better Life',
+      about: 'Welcome Eagle | Welcome Reward For Your Decision',
       myDuration: Duration(seconds: 10),
       rewardImage: 'asset/rewards/angle.png'),
   RewardModel(
       id: 'skull',
       about: 'Fighter Skull | 1 Day No Masturbation Reward',
-      myDuration: Duration(seconds: 20),
+      myDuration: Duration(days: 1),
       rewardImage: 'asset/rewards/skull.png'),
   RewardModel(
       id: 'reskull',
       about: 'Pirates Hat | 2 Days No Masturbation Reward',
-      myDuration: Duration(seconds: 30),
+      myDuration: Duration(days: 2),
       rewardImage: 'asset/rewards/reskull.png'),
   RewardModel(
       id: 'bear',
