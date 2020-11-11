@@ -113,6 +113,13 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen> {
             SizedBox(
               height: 15,
             ),
+            Text(
+              '*Profile pic takes 1 min. to update',
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: 15,
+            ),
             Neumorphic(
               child: TextField(
                 controller: nameTextController,

@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:never_again/models/reportCardModel.dart';
 import 'package:never_again/provider/chatDataLogic.dart';
+import 'package:never_again/provider/rewardsList.dart';
 import 'package:never_again/screens/chatStoreScreen.dart';
 import 'package:never_again/widgets/myDrawer.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
@@ -15,6 +18,8 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final _fireStore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
   @override
   void didChangeDependencies() {
     ChatDataLogic().getAllReportCard(ctx: context);
@@ -45,19 +50,38 @@ class _ChatScreenState extends State<ChatScreen> {
               //               // ),
             ]),
         body: FutureBuilder(
-          future: ChatDataLogic().getAllReportCard(ctx: context),
+          future: _fireStore.collection('users').limit(10).get(),
+          // ChatDataLogic().getAllReportCard(ctx: context)
           builder: (ctx, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                   child: Lottie.asset('asset/cat_loader.json',
                       width: 100, height: 100));
             }
+
+            List allReportCards = (snapshot.data.docs
+                    .expand((element) => element.data()['reportCard'] as List)
+                    .toList() as List)
+                .where((element) => element['public'] == true)
+                .map((e) => ReportCardModel(
+                    username: e['username'].toString(),
+                    // id: element.id,
+                    datetime: (e['dateTime'] as Timestamp).toDate(),
+                    sperms: e['sperms'],
+                    controlDuration: e['controlDuration'],
+                    rewards: e['rewards'],
+                    reason: e['reason'].toString(),
+                    public: e['public'],
+                    userImage: e['userImageUrl']))
+                .toList();
+            allReportCards.shuffle();
+
             return SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: snapshot.data != null
                   ? Column(
                       children: [
-                        ...(snapshot.data as List<ReportCardModel>)
+                        ...(allReportCards as List<ReportCardModel>)
                             .map((e) => Container(
                                   margin: EdgeInsets.all(8),
                                   child: Neumorphic(
@@ -189,12 +213,54 @@ class _ChatScreenState extends State<ChatScreen> {
                                             ),
                                           ),
                                         ),
-                                        Chip(
-                                          label: Text(
-                                            'REASON: ${e.reason.toString()}',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                        SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Container(
+                                            padding: EdgeInsets.all(8),
+                                            child: Chip(
+                                              label: Row(children: [
+                                                ...e.rewards.expand((emo) {
+                                                  return rewardList
+                                                      .where((element) =>
+                                                          element.id == emo)
+                                                      .map((eyo) => Container(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        5),
+                                                            child: Image.asset(
+                                                              eyo.rewardImage,
+                                                              height: 50,
+                                                              width: 50,
+                                                            ),
+                                                          ));
+                                                }).toList()
+                                              ]),
+                                            ),
                                           ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Chip(
+                                              label: Text(
+                                                'REASON: ${e.reason.toString()}',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                            Chip(
+                                              label: Text(
+                                                '${e.controlDuration?.substring(0, e.controlDuration?.indexOf(':'))} Hours',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         // Container(
                                         //   margin: EdgeInsets.all(8),

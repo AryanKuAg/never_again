@@ -37,7 +37,7 @@ class LoginLogic with ChangeNotifier {
         'username': username,
         'age': age,
         'isMale': isMale,
-        'rewards': rewardList.map((e) => {'id': e.id, 'frequency': 0}).toList(),
+        'reportCard': [],
         'bio': 'My Bio',
         'masturbation': true,
         'userImageUrl': url

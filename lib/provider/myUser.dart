@@ -25,13 +25,6 @@ class MyUser with ChangeNotifier {
     return userInfoDoc['bio'];
   }
 
-  Future<int> get getTotalUploads async {
-    final doc = await _fireStore
-        .collection('users/${_auth.currentUser.uid}/reportCard')
-        .get();
-    return doc.size;
-  }
-
   Future<void> updateUserInfo({String username, bio, File updatedImage}) async {
     print(
         'username:$username, bio:$bio, updatedImage:${updatedImage.toString()}');

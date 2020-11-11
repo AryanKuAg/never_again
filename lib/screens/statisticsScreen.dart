@@ -21,9 +21,24 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     super.dispose();
   }
 
+  void scrollToDown() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      controller1.animateTo(
+        controller1.position.maxScrollExtent,
+        duration: const Duration(seconds: 1),
+        curve: Curves.easeOut,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: NeumorphicFloatingActionButton(
+        style: NeumorphicStyle(boxShape: NeumorphicBoxShape.circle()),
+        child: Icon(Icons.keyboard_arrow_down),
+        onPressed: scrollToDown,
+      ),
       drawer: MyDrawer(),
       appBar: CustomNeumorphicAppBar(titleText: 'Statistics', ctx: context),
       body: SingleChildScrollView(
@@ -32,18 +47,6 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            RaisedButton(
-              child: Text('Bottom'),
-              onPressed: () {
-                SchedulerBinding.instance.addPostFrameCallback((_) {
-                  controller1.animateTo(
-                    controller1.position.maxScrollExtent,
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.easeOut,
-                  );
-                });
-              },
-            ),
             ChartOfMasturbation(),
             PieChartOfReason(),
             ReportCardWidget()

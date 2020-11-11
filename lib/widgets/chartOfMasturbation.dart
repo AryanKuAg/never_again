@@ -20,10 +20,11 @@ class _ChartOfMasturbationState extends State<ChartOfMasturbation> {
     final mediaQuery = MediaQuery.of(context).size;
     return FutureBuilder(
         future: fireStore
-            .collection('users/${auth.currentUser.uid}/reportCard')
-            .orderBy('dateTime', descending: false)
-            .limit(5)
-            .get(),
+            .collection('users')
+            .doc(auth.currentUser.uid)
+            .get(), // .orderBy('dateTime', descending: false)
+        // .limit(5)
+        // .get(),
         builder: (ctx, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -31,7 +32,8 @@ class _ChartOfMasturbationState extends State<ChartOfMasturbation> {
                     width: 100, height: 100));
           }
 
-          if ((snapshot.data as QuerySnapshot).docs.length <= 0) {
+          if ((snapshot.data as DocumentSnapshot).data()['reportCard'].length <=
+              0) {
             return Container();
           }
 
@@ -44,10 +46,12 @@ class _ChartOfMasturbationState extends State<ChartOfMasturbation> {
           //
           // //get list value in the scale of 1 to 6 for the graph of sperm amount
           //
-          final List myIndexOfAmount =
-              (snapshot.data as QuerySnapshot).docs.map((e) {
-            final _data =
-                (e.data()['sperms'] * 1.1 as double); //1.1 million dollar
+          final List myIndexOfAmount = (snapshot.data as DocumentSnapshot)
+              .data()['reportCard']
+              .reversed
+              .take(5)
+              .map((e) {
+            final _data = (e['sperms'] * 1.1 as double); //1.1 million dollar
 
             if (_data > 100.0) {
               return 6;

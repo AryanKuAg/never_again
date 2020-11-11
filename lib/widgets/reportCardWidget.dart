@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl/intl.dart';
@@ -7,16 +8,15 @@ import 'package:never_again/provider/myUser.dart';
 
 class ReportCardWidget extends StatelessWidget {
   final _fireStore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
 
     return StreamBuilder(
-      stream: _fireStore
-          .collection('users/${MyUser().uid}/reportCard')
-          .orderBy('dateTime', descending: true)
-          .snapshots(),
+      stream:
+          _fireStore.collection('users').doc(_auth.currentUser.uid).snapshots(),
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Lottie.asset('asset/cat_loader.json', width: 100, height: 100);
@@ -25,7 +25,9 @@ class ReportCardWidget extends StatelessWidget {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ...snapshot.data.documents
+            ...(snapshot.data['reportCard'] as List)
+                .reversed
+                .take(1)
                 .map((e) => Container(
                       margin: EdgeInsets.all(8),
                       child: Neumorphic(
@@ -137,11 +139,25 @@ class ReportCardWidget extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            Chip(
-                              label: Text(
-                                'REASON: ${e['reason'].toString()}',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Chip(
+                                  label: Text(
+                                    'REASON: ${e['reason'].toString()}',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Chip(
+                                  backgroundColor: Colors.blueAccent,
+                                  label: Text(
+                                    '✔ LATEST',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
                             ),
                             // Container(
                             //   margin: EdgeInsets.all(8),

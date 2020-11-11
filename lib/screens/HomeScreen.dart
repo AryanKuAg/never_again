@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:never_again/screens/allReportCards.dart';
 import 'package:never_again/screens/noSelectionScreen.dart';
 
 import 'package:never_again/screens/submitMasturbationData.dart';
@@ -28,7 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
           myWidgetList: [
             NeumorphicButton(
               child: Icon(Icons.bubble_chart),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (ctx) => AllReportCards()));
+              },
               duration: Duration(milliseconds: 400),
             ),
           ]),

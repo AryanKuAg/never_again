@@ -17,10 +17,7 @@ class _PieChartOfReasonState extends State<PieChartOfReason> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: fireStore
-          .collection('users/${auth.currentUser.uid}/reportCard')
-          .limit(10)
-          .get(),
+      future: fireStore.collection('users').doc(auth.currentUser.uid).get(),
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -28,7 +25,7 @@ class _PieChartOfReasonState extends State<PieChartOfReason> {
                   width: 100, height: 100));
         }
 
-        if ((snapshot.data as QuerySnapshot).docs.length <= 0) {
+        if ((snapshot.data as DocumentSnapshot)['reportCard'].length <= 0) {
           return Column(
             children: [
               Lottie.asset('asset/girl_loader.json'),
@@ -43,8 +40,9 @@ class _PieChartOfReasonState extends State<PieChartOfReason> {
           );
         }
 
-        final List _list = (snapshot.data as QuerySnapshot).docs.map((e) {
-          return e.data()['reason'];
+        final List _list =
+            (snapshot.data as DocumentSnapshot)['reportCard'].take(10).map((e) {
+          return e['reason'];
         }).toList();
 
         List<Color> colorCollection = [

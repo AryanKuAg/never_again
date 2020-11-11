@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
 import 'package:never_again/DBhelper/localDatabase.dart';
+import 'package:never_again/models/rewardModel.dart';
 import 'package:never_again/provider/myUser.dart';
 import 'package:never_again/provider/reportCardLogic.dart';
+import 'package:never_again/screens/allReportCards.dart';
+import 'package:never_again/screens/statisticsScreen.dart';
 import 'package:provider/provider.dart';
 
 enum GlobalValues { public, private }
@@ -441,23 +444,34 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                             'Submit Data',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
-                          onPressed: () {
+                          onPressed: () async {
                             if (myRadioValue != null) {
-                              reportCardLogic.addReportCard(
-                                  reason: dropdownValue,
-                                  customSelection: mySliderValue.toInt(),
-                                  selectAmount:
-                                      amountOfSpermGetter(amountOfSperm),
-                                  public: myRadioValue == GlobalValues.public
-                                      ? true
-                                      : false,
-                                  id: DateTime.now().toString(),
-                                  dateTime: DateTime.now(),
-                                  username: futureSnapshot.data.toString(),
-                                  userImageUrl: futureSnap.data);
+                              Center(
+                                child: CircularProgressIndicator(),
+                              );
+                              // dateProvider.uploadListToServer();
+                              final masturbationTime = await LocalDatabase()
+                                  .getMasturbationTimeInString;
+                              await reportCardLogic.addReportCard(
+                                masturbationTime: masturbationTime,
+                                reason: dropdownValue,
+                                customSelection: mySliderValue.toInt(),
+                                selectAmount:
+                                    amountOfSpermGetter(amountOfSperm),
+                                public: myRadioValue == GlobalValues.public
+                                    ? true
+                                    : false,
+                                id: DateTime.now().toString(),
+                                dateTime: DateTime.now(),
+                                username: futureSnapshot.data.toString(),
+                                userImageUrl: futureSnap.data,
+                              );
                               dateProvider.insertDateTime(DateTime.now());
-                              dateProvider.uploadListToServer();
-                              Navigator.of(context).pop();
+
+                              Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                builder: (ctx) => AllReportCards(),
+                              ));
                             } else {
                               showDialog(
                                   context: context,
