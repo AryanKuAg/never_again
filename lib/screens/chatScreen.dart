@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -7,7 +10,7 @@ import 'package:lottie/lottie.dart';
 import 'package:never_again/models/reportCardModel.dart';
 import 'package:never_again/provider/chatDataLogic.dart';
 import 'package:never_again/provider/rewardsList.dart';
-import 'package:never_again/screens/chatStoreScreen.dart';
+import 'package:never_again/widgets/advertisementData.dart';
 import 'package:never_again/widgets/myDrawer.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +22,25 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   final _fireStore = FirebaseFirestore.instance;
-  final _auth = FirebaseAuth.instance;
+  var subscription;
+  BannerAd _bannerAd;
+
+  @override
+  void initState() {
+    FirebaseAdMob.instance
+        .initialize(appId: 'ca-app-pub-3739926644625425~6646484032');
+    _bannerAd = AdvertisementData().createBannerAd()
+      ..load()
+      ..show(anchorType: AnchorType.top, anchorOffset: 105.0);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
+
   @override
   void didChangeDependencies() {
     ChatDataLogic().getAllReportCard(ctx: context);
@@ -54,6 +75,11 @@ class _ChatScreenState extends State<ChatScreen> {
           // ChatDataLogic().getAllReportCard(ctx: context)
           builder: (ctx, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
+              Timer(Duration(seconds: 5), () {
+                return Center(
+                    child: Lottie.asset('asset/lonely_404.json',
+                        width: 100, height: 100));
+              });
               return Center(
                   child: Lottie.asset('asset/cat_loader.json',
                       width: 100, height: 100));
@@ -76,298 +102,212 @@ class _ChatScreenState extends State<ChatScreen> {
                 .toList();
             allReportCards.shuffle();
 
-            return SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: snapshot.data != null
-                  ? Column(
-                      children: [
-                        ...(allReportCards as List<ReportCardModel>)
-                            .map((e) => Container(
-                                  margin: EdgeInsets.all(8),
-                                  child: Neumorphic(
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        ListTile(
-                                          leading: CircleAvatar(
-                                            backgroundImage: e.userImage != null
-                                                ? NetworkImage(e.userImage)
-                                                : null,
-                                          ),
-                                          title: Text(
-                                            e.username,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          subtitle: Text(
-                                            e.public
-                                                ? '🌍 PUBLIC'
-                                                : '🔒 PRIVATE',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          trailing: Chip(
-                                            label: Text(
-                                                DateFormat.yMMMMd('en_US')
-                                                    .format(e.datetime)
-                                                    .toString()),
-                                          ),
-                                        ),
-                                        SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Container(
-                                            padding: EdgeInsets.all(8),
-                                            child: Chip(
-                                              label: Row(
-                                                children: [
-                                                  Image.asset(
-                                                    'asset/moresperm.png',
-                                                    width: mediaQuery.height *
-                                                        0.04,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Text(
-                                                    '${e.sperms.toString()} ml',
-                                                    style: TextStyle(
-                                                        fontSize:
-                                                            mediaQuery.height *
-                                                                0.04,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Text(
-                                                    '=',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize:
-                                                            mediaQuery.height *
-                                                                0.04),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: [
-                                                          Image.asset(
-                                                            'asset/ssd.png',
-                                                            width: mediaQuery
-                                                                    .height *
-                                                                0.04,
-                                                          ),
-                                                          SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Text(
-                                                            '${(e.sperms * 11.2).toInt().toString()}PB DNA',
-                                                            style: TextStyle(
-                                                                fontSize: mediaQuery
-                                                                        .height *
-                                                                    0.04,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: [
-                                                          Image.asset(
-                                                            'asset/dollar.png',
-                                                            width: mediaQuery
-                                                                    .height *
-                                                                0.04,
-                                                          ),
-                                                          SizedBox(
-                                                            width: 10,
-                                                          ),
-                                                          Text(
-                                                            '\$ ${(e.sperms * 1.12).toInt().toString()}M',
-                                                            style: TextStyle(
-                                                                fontSize: mediaQuery
-                                                                        .height *
-                                                                    0.04,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
+            return RefreshIndicator(
+              onRefresh: () async {
+                setState(() {});
+              },
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: snapshot.data != null
+                    ? Column(
+                        children: [
+                          SizedBox(
+                            height: 40,
+                          ),
+                          ...(allReportCards as List<ReportCardModel>)
+                              .map((e) => Container(
+                                    margin: EdgeInsets.all(8),
+                                    child: Neumorphic(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          ListTile(
+                                            leading: CircleAvatar(
+                                              backgroundImage: e.userImage !=
+                                                      null
+                                                  ? NetworkImage(e.userImage)
+                                                  : null,
+                                            ),
+                                            title: Text(
+                                              e.username,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            subtitle: Text(
+                                              e.public
+                                                  ? '🌍 PUBLIC'
+                                                  : '🔒 PRIVATE',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            trailing: Chip(
+                                              label: Text(
+                                                  DateFormat.yMMMMd('en_US')
+                                                      .format(e.datetime)
+                                                      .toString()),
                                             ),
                                           ),
-                                        ),
-                                        SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Container(
-                                            padding: EdgeInsets.all(8),
-                                            child: Chip(
-                                              label: Row(children: [
-                                                ...e.rewards.expand((emo) {
-                                                  return rewardList
-                                                      .where((element) =>
-                                                          element.id == emo)
-                                                      .map((eyo) => Container(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .symmetric(
-                                                                    horizontal:
-                                                                        5),
-                                                            child: Image.asset(
-                                                              eyo.rewardImage,
-                                                              height: 50,
-                                                              width: 50,
+                                          SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Container(
+                                              padding: EdgeInsets.all(8),
+                                              child: Chip(
+                                                label: Row(
+                                                  children: [
+                                                    Image.asset(
+                                                      'asset/moresperm.png',
+                                                      width: mediaQuery.height *
+                                                          0.04,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Text(
+                                                      '${e.sperms.toString()} ml',
+                                                      style: TextStyle(
+                                                          fontSize: mediaQuery
+                                                                  .height *
+                                                              0.04,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Text(
+                                                      '=',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: mediaQuery
+                                                                  .height *
+                                                              0.04),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Image.asset(
+                                                              'asset/ssd.png',
+                                                              width: mediaQuery
+                                                                      .height *
+                                                                  0.04,
                                                             ),
-                                                          ));
-                                                }).toList()
-                                              ]),
+                                                            SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Text(
+                                                              '${(e.sperms * 11.2).toInt().toString()}PB DNA',
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      mediaQuery
+                                                                              .height *
+                                                                          0.04,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Image.asset(
+                                                              'asset/dollar.png',
+                                                              width: mediaQuery
+                                                                      .height *
+                                                                  0.04,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                            Text(
+                                                              '\$ ${(e.sperms * 1.12).toInt().toString()}M',
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      mediaQuery
+                                                                              .height *
+                                                                          0.04,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Chip(
-                                              label: Text(
-                                                'REASON: ${e.reason.toString()}',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                          SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Container(
+                                              padding: EdgeInsets.all(8),
+                                              child: Chip(
+                                                label: Row(children: [
+                                                  ...e.rewards.expand((emo) {
+                                                    return rewardList
+                                                        .where((element) =>
+                                                            element.id == emo)
+                                                        .map((eyo) => Container(
+                                                              padding: const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      5),
+                                                              child:
+                                                                  Image.asset(
+                                                                eyo.rewardImage,
+                                                                height: 50,
+                                                                width: 50,
+                                                              ),
+                                                            ));
+                                                  }).toList()
+                                                ]),
                                               ),
                                             ),
-                                            Chip(
-                                              label: Text(
-                                                '${e.controlDuration?.substring(0, e.controlDuration?.indexOf(':'))} Hours',
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Chip(
+                                                label: Text(
+                                                  'REASON: ${e.reason.toString()}',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        // Container(
-                                        //   margin: EdgeInsets.all(8),
-                                        //   child: Row(
-                                        //     mainAxisSize: MainAxisSize.max,
-                                        //     children: [
-                                        //       Expanded(
-                                        //         child: Container(
-                                        //           child: NeumorphicButton(
-                                        //             child: Text(
-                                        //               'Like',
-                                        //               textAlign:
-                                        //                   TextAlign.center,
-                                        //               style: TextStyle(
-                                        //                   fontWeight:
-                                        //                       FontWeight.bold),
-                                        //             ),
-                                        //             onPressed: () {},
-                                        //           ),
-                                        //           margin: EdgeInsets.all(5),
-                                        //         ),
-                                        //       ),
-                                        //       Expanded(
-                                        //         child: Container(
-                                        //           margin: EdgeInsets.all(5),
-                                        //           child: NeumorphicButton(
-                                        //             child: Text(
-                                        //               'Comment',
-                                        //               textAlign:
-                                        //                   TextAlign.center,
-                                        //               style: TextStyle(
-                                        //                   fontWeight:
-                                        //                       FontWeight.bold),
-                                        //             ),
-                                        //             onPressed: () {
-                                        //               showModalBottomSheet(
-                                        //                   context: context,
-                                        //                   backgroundColor:
-                                        //                       Colors.white70
-                                        //                           .withOpacity(
-                                        //                               0),
-                                        //                   builder: (ctx) =>
-                                        //                       Container(
-                                        //                         decoration: BoxDecoration(
-                                        //                             color: Colors
-                                        //                                 .white,
-                                        //                             borderRadius:
-                                        //                                 BorderRadius.vertical(
-                                        //                                     top:
-                                        //                                         Radius.circular(20))),
-                                        //                         child: Column(
-                                        //                           mainAxisSize:
-                                        //                               MainAxisSize
-                                        //                                   .min,
-                                        //                           children: [
-                                        //                             Text('hey'),
-                                        //                             Text('hey'),
-                                        //                             Text('hey'),
-                                        //                             Text('hey'),
-                                        //                             Text('hey'),
-                                        //                             Text('hey'),
-                                        //                             Text('hey'),
-                                        //                             Text('hey'),
-                                        //                             Text('hey'),
-                                        //                             Text('hey'),
-                                        //                             Spacer(),
-                                        //                             TextField()
-                                        //                           ],
-                                        //                         ),
-                                        //                       ));
-                                        //             },
-                                        //           ),
-                                        //         ),
-                                        //       ),
-                                        //       Expanded(
-                                        //         child: Container(
-                                        //           margin: EdgeInsets.all(5),
-                                        //           child: NeumorphicButton(
-                                        //             child: Text(
-                                        //               'Save',
-                                        //               style: TextStyle(
-                                        //                   fontWeight:
-                                        //                       FontWeight.bold),
-                                        //               textAlign:
-                                        //                   TextAlign.center,
-                                        //             ),
-                                        //             onPressed: () {},
-                                        //           ),
-                                        //         ),
-                                        //       ),
-                                        //     ],
-                                        //   ),
-                                        // ),
-                                        if (false)
-                                          Neumorphic(
-                                            margin: EdgeInsets.all(10),
-                                            style: NeumorphicStyle(
-                                                shape: NeumorphicShape.concave),
-                                          )
-                                      ],
+                                              Chip(
+                                                label: Text(
+                                                  '${e.controlDuration?.substring(0, e.controlDuration?.indexOf(':'))} Hours',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ))
-                            .toList()
-                      ],
-                    )
-                  : Lottie.asset('asset/lonely_404.json'),
+                                  ))
+                              .toList()
+                        ],
+                      )
+                    : Lottie.asset('asset/lonely_404.json'),
+              ),
             );
           },
         ));

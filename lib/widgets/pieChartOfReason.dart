@@ -32,7 +32,7 @@ class _PieChartOfReasonState extends State<PieChartOfReason> {
               SizedBox(
                 height: 10,
               ),
-              Text(
+              const Text(
                 'No Data Found 😅',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
               )

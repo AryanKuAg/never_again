@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:never_again/screens/HomeScreen.dart';
 import 'package:never_again/screens/rewardsDrawerScreen.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -34,7 +33,9 @@ class MyDrawer extends StatelessWidget {
                     ),
                   ),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
               ),
               GestureDetector(
                 child: ListTile(

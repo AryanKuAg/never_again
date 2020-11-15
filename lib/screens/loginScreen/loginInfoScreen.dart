@@ -58,7 +58,9 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
     final localDatabase = Provider.of<LocalDatabase>(context);
     return Scaffold(
       body: _isLoading
-          ? Center(child: Lottie.asset('asset/cat_loader.json'))
+          ? Center(
+              child: Lottie.asset('asset/cat_loader.json',
+                  height: 100, width: 100))
           : SafeArea(
               child: Container(
                 margin: EdgeInsets.all(15),
@@ -93,7 +95,7 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
                                       onPressed: _pickImageGallery,
                                     )
                                   ],
-                                  content: Text('Choose The Source'),
+                                  content: const Text('Choose The Source'),
                                 ));
                       },
                     ),
@@ -186,7 +188,7 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text(
+                                      const Text(
                                         'MALE',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
@@ -227,10 +229,16 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
                                       SizedBox(
                                         height: 10,
                                       ),
-                                      Text(
+                                      const Text(
                                         'FEMALE',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
+                                      ),
+                                      const Text(
+                                        '*Unavailable for this version of app',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.red),
                                       )
                                     ],
                                   ),
@@ -274,8 +282,8 @@ class _LoginInfoScreenState extends State<LoginInfoScreen> {
                             showDialog(
                                 context: context,
                                 builder: (ctx) => AlertDialog(
-                                      title: Text('Something Is Missing'),
-                                      content: Text(
+                                      title: const Text('Something Is Missing'),
+                                      content: const Text(
                                           'Try to Re-check all the fields'),
                                     ));
                           }

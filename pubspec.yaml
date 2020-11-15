@@ -38,6 +38,9 @@ dependencies:
   splashscreen: ^1.2.0
   double_back_to_close_app: ^1.2.0
   shared_preferences: ^0.5.12+2
+  google_sign_in: ^4.5.6
+  firebase_admob: ^0.10.2
+
 
 
 

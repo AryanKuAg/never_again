@@ -1,16 +1,16 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
-import 'package:never_again/models/rewardModel.dart';
 
-import 'package:never_again/provider/myUser.dart';
 import 'package:never_again/provider/rewardsList.dart';
 
 import 'package:never_again/screens/editUserProfileScreen.dart';
+import 'package:never_again/widgets/advertisementData.dart';
 import 'package:never_again/widgets/iconNameFunction.dart';
 import 'package:never_again/widgets/myDrawer.dart';
 import 'package:never_again/widgets/neumorphicAppBar.dart';
@@ -22,8 +22,24 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final _firestore = FirebaseFirestore.instance;
-
+  BannerAd _bannerAd;
   final _uid = FirebaseAuth.instance.currentUser.uid;
+
+  @override
+  void initState() {
+    FirebaseAdMob.instance
+        .initialize(appId: 'ca-app-pub-3739926644625425~6646484032');
+    _bannerAd = AdvertisementData().createBannerAd()
+      ..load()
+      ..show(anchorType: AnchorType.top, anchorOffset: 105.0);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          SizedBox(height: 40),
                           AvatarGlow(
                             glowColor: Colors.pink,
                             endRadius: 100,
@@ -78,13 +95,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                IconNameFunction(
-                                  myFunction: () {
-                                    print('just pressede');
-                                  },
-                                  myIcon: Image.asset('asset/bookmark.png'),
-                                  myName: 'Saved',
-                                ),
+                                // IconNameFunction(
+                                //   myFunction: () {
+                                //     print('just pressede');
+                                //   },
+                                //   myIcon: Image.asset('asset/bookmark.png'),
+                                //   myName: 'Saved',
+                                // ),
                                 IconNameFunction(
                                   myFunction: () {
                                     showDialog(
@@ -131,11 +148,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   myIcon: Image.asset('asset/medal.png'),
                                   myName: 'Rewards',
                                 ),
-                                IconNameFunction(
-                                  myFunction: () {},
-                                  myIcon: Image.asset('asset/giftbox.png'),
-                                  myName: 'Gifts',
-                                ),
+                                // IconNameFunction(
+                                //   myFunction: () {},
+                                //   myIcon: Image.asset('asset/giftbox.png'),
+                                //   myName: 'Gifts',
+                                // ),
                               ],
                             ),
                           ),
@@ -144,16 +161,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                IconNameFunction(
-                                  myFunction: () {},
-                                  myIcon: Image.asset('asset/love.png'),
-                                  myName: 'Loved',
-                                ),
-                                IconNameFunction(
-                                  myFunction: () {},
-                                  myIcon: Image.asset('asset/like.png'),
-                                  myName: 'Liked',
-                                ),
+                                // IconNameFunction(
+                                //   myFunction: () {},
+                                //   myIcon: Image.asset('asset/love.png'),
+                                //   myName: 'Loved',
+                                // ),
+                                // IconNameFunction(
+                                //   myFunction: () {},
+                                //   myIcon: Image.asset('asset/like.png'),
+                                //   myName: 'Liked',
+                                // ),
                               ],
                             ),
                           ),

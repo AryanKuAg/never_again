@@ -1,7 +1,32 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:never_again/screens/allReportCards.dart';
+import 'package:never_again/widgets/advertisementData.dart';
 
-class NoSelectionScreen extends StatelessWidget {
+class NoSelectionScreen extends StatefulWidget {
+  @override
+  _NoSelectionScreenState createState() => _NoSelectionScreenState();
+}
+
+class _NoSelectionScreenState extends State<NoSelectionScreen> {
+  BannerAd _bannerAd;
+  @override
+  void initState() {
+    FirebaseAdMob.instance
+        .initialize(appId: 'ca-app-pub-3739926644625425~6646484032');
+    _bannerAd = AdvertisementData().createBannerAd()
+      ..load()
+      ..show(anchorType: AnchorType.top, anchorOffset: 105.0);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,11 +96,14 @@ class NoSelectionScreen extends StatelessWidget {
                   margin: EdgeInsets.all(20),
                   child: Center(
                       child: Text(
-                    'Generate Report',
+                    'My Reports',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (ctx) => AllReportCards()));
+                  },
                 )),
               ],
             ))

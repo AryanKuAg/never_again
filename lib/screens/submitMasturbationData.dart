@@ -1,13 +1,13 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
 import 'package:never_again/DBhelper/localDatabase.dart';
-import 'package:never_again/models/rewardModel.dart';
 import 'package:never_again/provider/myUser.dart';
 import 'package:never_again/provider/reportCardLogic.dart';
 import 'package:never_again/screens/allReportCards.dart';
-import 'package:never_again/screens/statisticsScreen.dart';
+import 'package:never_again/widgets/advertisementData.dart';
 import 'package:provider/provider.dart';
 
 enum GlobalValues { public, private }
@@ -54,11 +54,22 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
   Future<String> myFuture;
   Future<String> myUserImageFuture;
 
+  InterstitialAd _interstitialAd;
+
   @override
   void initState() {
     super.initState();
+    FirebaseAdMob.instance
+        .initialize(appId: 'ca-app-pub-3739926644625425~6646484032');
     myFuture = MyUser().getUsername;
     myUserImageFuture = MyUser().userImageUrl;
+  }
+
+  @override
+  void dispose() {
+    _interstitialAd?.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -445,6 +456,9 @@ class _SubmitMasturbationDataState extends State<SubmitMasturbationData> {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                           onPressed: () async {
+                            AdvertisementData().createInterstitialAd()
+                              ..load()
+                              ..show();
                             if (myRadioValue != null) {
                               Center(
                                 child: CircularProgressIndicator(),
