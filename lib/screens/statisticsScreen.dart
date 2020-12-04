@@ -21,15 +21,19 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   void initState() {
     FirebaseAdMob.instance
         .initialize(appId: 'ca-app-pub-3739926644625425~6646484032');
+
     _bannerAd = AdvertisementData().createBannerAd()
-      ..load()
-      ..show(anchorType: AnchorType.top, anchorOffset: 105.0);
+      ..load().then((value) {
+        if (value && this.mounted) {
+          _bannerAd..show(anchorType: AnchorType.top, anchorOffset: 105.0);
+        }
+      });
     super.initState();
   }
 
   @override
   void dispose() {
-    _bannerAd.dispose();
+    _bannerAd?.dispose();
     controller1.dispose();
     super.dispose();
   }
@@ -54,19 +58,19 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
       ),
       drawer: MyDrawer(),
       appBar: CustomNeumorphicAppBar(titleText: 'Statistics', ctx: context),
-      body: SingleChildScrollView(
-        controller: controller1,
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: 40,
-            ),
-            ChartOfMasturbation(),
-            PieChartOfReason(),
-            ReportCardWidget()
-          ],
+      body: Container(
+        margin: const EdgeInsets.only(top: 50),
+        child: SingleChildScrollView(
+          controller: controller1,
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ChartOfMasturbation(),
+              PieChartOfReason(),
+              ReportCardWidget()
+            ],
+          ),
         ),
       ),
     );

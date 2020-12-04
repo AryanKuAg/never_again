@@ -29,15 +29,20 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     FirebaseAdMob.instance
         .initialize(appId: 'ca-app-pub-3739926644625425~6646484032');
+
     _bannerAd = AdvertisementData().createBannerAd()
-      ..load()
-      ..show(anchorType: AnchorType.top, anchorOffset: 105.0);
+      ..load().then((value) {
+        if (value && this.mounted) {
+          _bannerAd..show(anchorType: AnchorType.top, anchorOffset: 105.0);
+        }
+      });
     super.initState();
   }
 
   @override
   void dispose() {
     _bannerAd?.dispose();
+
     super.dispose();
   }
 
@@ -106,206 +111,211 @@ class _ChatScreenState extends State<ChatScreen> {
               onRefresh: () async {
                 setState(() {});
               },
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                child: snapshot.data != null
-                    ? Column(
-                        children: [
-                          SizedBox(
-                            height: 40,
-                          ),
-                          ...(allReportCards as List<ReportCardModel>)
-                              .map((e) => Container(
-                                    margin: EdgeInsets.all(8),
-                                    child: Neumorphic(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          ListTile(
-                                            leading: CircleAvatar(
-                                              backgroundImage: e.userImage !=
-                                                      null
-                                                  ? NetworkImage(e.userImage)
-                                                  : null,
-                                            ),
-                                            title: Text(
-                                              e.username,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            subtitle: Text(
-                                              e.public
-                                                  ? '🌍 PUBLIC'
-                                                  : '🔒 PRIVATE',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                            trailing: Chip(
-                                              label: Text(
-                                                  DateFormat.yMMMMd('en_US')
-                                                      .format(e.datetime)
-                                                      .toString()),
-                                            ),
-                                          ),
-                                          SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            child: Container(
-                                              padding: EdgeInsets.all(8),
-                                              child: Chip(
-                                                label: Row(
-                                                  children: [
-                                                    Image.asset(
-                                                      'asset/moresperm.png',
-                                                      width: mediaQuery.height *
-                                                          0.04,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Text(
-                                                      '${e.sperms.toString()} ml',
-                                                      style: TextStyle(
-                                                          fontSize: mediaQuery
-                                                                  .height *
-                                                              0.04,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Text(
-                                                      '=',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: mediaQuery
-                                                                  .height *
-                                                              0.04),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 10,
-                                                    ),
-                                                    Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Image.asset(
-                                                              'asset/ssd.png',
-                                                              width: mediaQuery
-                                                                      .height *
-                                                                  0.04,
-                                                            ),
-                                                            SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            Text(
-                                                              '${(e.sperms * 11.2).toInt().toString()}PB DNA',
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      mediaQuery
-                                                                              .height *
-                                                                          0.04,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Image.asset(
-                                                              'asset/dollar.png',
-                                                              width: mediaQuery
-                                                                      .height *
-                                                                  0.04,
-                                                            ),
-                                                            SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            Text(
-                                                              '\$ ${(e.sperms * 1.12).toInt().toString()}M',
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      mediaQuery
-                                                                              .height *
-                                                                          0.04,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
+              child: Container(
+                margin: const EdgeInsets.only(top: 50),
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: snapshot.data != null
+                      ? Column(
+                          children: [
+                            ...(allReportCards as List<ReportCardModel>)
+                                .map((e) => Container(
+                                      margin: EdgeInsets.all(8),
+                                      child: Neumorphic(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            ListTile(
+                                              leading: CircleAvatar(
+                                                backgroundImage: e.userImage !=
+                                                        null
+                                                    ? NetworkImage(e.userImage)
+                                                    : null,
+                                              ),
+                                              title: Text(
+                                                e.username,
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              subtitle: Text(
+                                                e.public
+                                                    ? '🌍 PUBLIC'
+                                                    : '🔒 PRIVATE',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              trailing: Chip(
+                                                label: Text(
+                                                    DateFormat.yMMMMd('en_US')
+                                                        .format(e.datetime)
+                                                        .toString()),
                                               ),
                                             ),
-                                          ),
-                                          SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            child: Container(
-                                              padding: EdgeInsets.all(8),
-                                              child: Chip(
-                                                label: Row(children: [
-                                                  ...e.rewards.expand((emo) {
-                                                    return rewardList
-                                                        .where((element) =>
-                                                            element.id == emo)
-                                                        .map((eyo) => Container(
-                                                              padding: const EdgeInsets
-                                                                      .symmetric(
-                                                                  horizontal:
-                                                                      5),
-                                                              child:
-                                                                  Image.asset(
-                                                                eyo.rewardImage,
-                                                                height: 50,
-                                                                width: 50,
+                                            SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Container(
+                                                padding: EdgeInsets.all(8),
+                                                child: Chip(
+                                                  label: Row(
+                                                    children: [
+                                                      Image.asset(
+                                                        'asset/moresperm.png',
+                                                        width:
+                                                            mediaQuery.height *
+                                                                0.04,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text(
+                                                        '${e.sperms.toString()} ml',
+                                                        style: TextStyle(
+                                                            fontSize: mediaQuery
+                                                                    .height *
+                                                                0.04,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Text(
+                                                        '=',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: mediaQuery
+                                                                    .height *
+                                                                0.04),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              Image.asset(
+                                                                'asset/ssd.png',
+                                                                width: mediaQuery
+                                                                        .height *
+                                                                    0.04,
                                                               ),
-                                                            ));
-                                                  }).toList()
-                                                ]),
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Text(
+                                                                '${(e.sperms * 11.2).toInt().toString()}PB DNA',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        mediaQuery.height *
+                                                                            0.04,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              Image.asset(
+                                                                'asset/dollar.png',
+                                                                width: mediaQuery
+                                                                        .height *
+                                                                    0.04,
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              Text(
+                                                                '\$ ${(e.sperms * 1.12).toInt().toString()}M',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        mediaQuery.height *
+                                                                            0.04,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Chip(
-                                                label: Text(
-                                                  'REASON: ${e.reason.toString()}',
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                            SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Container(
+                                                padding: EdgeInsets.all(8),
+                                                child: Chip(
+                                                  label: Row(children: [
+                                                    ...e.rewards.expand((emo) {
+                                                      return rewardList
+                                                          .where((element) =>
+                                                              element.id == emo)
+                                                          .map((eyo) =>
+                                                              Container(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        5),
+                                                                child:
+                                                                    Image.asset(
+                                                                  eyo.rewardImage,
+                                                                  height: 50,
+                                                                  width: 50,
+                                                                ),
+                                                              ));
+                                                    }).toList()
+                                                  ]),
                                                 ),
                                               ),
-                                              Chip(
-                                                label: Text(
-                                                  '${e.controlDuration?.substring(0, e.controlDuration?.indexOf(':'))} Hours',
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Chip(
+                                                  label: Text(
+                                                    'REASON: ${e.reason.toString()}',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                                Chip(
+                                                  label: Text(
+                                                    '${e.controlDuration?.substring(0, e.controlDuration?.indexOf(':'))} Hours',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ))
-                              .toList()
-                        ],
-                      )
-                    : Lottie.asset('asset/lonely_404.json'),
+                                    ))
+                                .toList()
+                          ],
+                        )
+                      : Lottie.asset('asset/lonely_404.json'),
+                ),
               ),
             );
           },

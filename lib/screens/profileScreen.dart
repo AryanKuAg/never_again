@@ -29,9 +29,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     FirebaseAdMob.instance
         .initialize(appId: 'ca-app-pub-3739926644625425~6646484032');
+
     _bannerAd = AdvertisementData().createBannerAd()
-      ..load()
-      ..show(anchorType: AnchorType.top, anchorOffset: 105.0);
+      ..load().then((value) {
+        if (value && this.mounted) {
+          _bannerAd..show(anchorType: AnchorType.top, anchorOffset: 105.0);
+        }
+      });
     super.initState();
   }
 
@@ -104,6 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 // ),
                                 IconNameFunction(
                                   myFunction: () {
+                                    _bannerAd?.dispose();
                                     showDialog(
                                         context: context,
                                         builder: (ctx) => AlertDialog(
