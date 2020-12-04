@@ -15,7 +15,7 @@ class ReportCardModel {
   List share;
   ReportCardModel(
       {@required this.username,
-       this.id,
+      this.id,
       this.controlDuration,
       this.rewards,
       @required this.datetime,

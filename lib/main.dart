@@ -17,6 +17,8 @@ import './screens/loginScreen/signupScreen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   ErrorWidget.builder = (FlutterErrorDetails details) => ErrorPage();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);

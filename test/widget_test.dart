@@ -11,6 +11,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:never_again/main.dart';
 
 void main() {
+  Container(
+    margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+    decoration: BoxDecoration(
+      border: Border.all(color: Colors.black, width: 2),
+    ),
+    padding: const EdgeInsets.all(10),
+    child: null,
+  );
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
